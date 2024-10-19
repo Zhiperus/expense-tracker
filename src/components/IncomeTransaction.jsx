@@ -1,6 +1,7 @@
 import React from "react";
 import { del } from "../state/transaction/transactionSlice";
 import { useDispatch, useSelector } from "react-redux";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const IncomeTransaction = ({ UID, date, amount, category, note }) => {
   const transactions = useSelector((state) => state.transaction.value);
@@ -11,11 +12,16 @@ const IncomeTransaction = ({ UID, date, amount, category, note }) => {
   };
 
   return (
-    <div>
-      <h1>
-        {date} {amount} {category} {note}
+    <div className="flex w-full h-20 bg-gray-500 justify-between rounded-3xl p-5">
+      <h1 className="self-center">
+        title
+        <div>
+          {amount} {date} {category} {note}
+        </div>
       </h1>
-      <button onClick={handleDelete}>Delete</button>
+      <button onClick={handleDelete}>
+        <DeleteIcon />
+      </button>
     </div>
   );
 };

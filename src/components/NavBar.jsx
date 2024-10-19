@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTab } from "../state/navigation/navigationSlice";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const NavBar = () => {
   const navigate = useSelector((state) => state.navigation.value);
   const dispatch = useDispatch();
 
   return (
-    <div className="p-8 h-full">
+    <div className="flex flex-col p-8 h-full">
       NavBar
       <div className="flex h-20 w-full">
         <img
@@ -19,7 +20,7 @@ const NavBar = () => {
           <h2>Summary</h2> {/* changes depending on clicked paged */}
         </div>
       </div>
-      <div className="flex flex-col mt-10 h-full gap-3 items-start">
+      <div className="flex flex-col mt-10 gap-3 items-start">
         <input
           type="button"
           value="Dashboard"
@@ -52,6 +53,11 @@ const NavBar = () => {
           }`}
           onClick={() => dispatch(changeTab(4))}
         />
+      </div>
+      <div className="flex mt-auto">
+        <button>
+          <ExitToAppIcon /> Sign Out
+        </button>
       </div>
     </div>
   );

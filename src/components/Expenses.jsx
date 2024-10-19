@@ -25,7 +25,7 @@ const Expenses = () => {
 
   return (
     <div>
-      <div className="flex">
+      <div className="flex gap-10">
         <div className="flex flex-col w-1/4">
           Add Income
           <form onSubmit={handleSubmit}>
@@ -49,14 +49,16 @@ const Expenses = () => {
           </form>
         </div>
         <div className="flex-auto">
-          {transactions.length != 0 &&
-            transactions.map((element) => {
-              return element.type === "expense" ? (
-                <IncomeTransaction key={element.UID} {...element} />
-              ) : (
-                ""
-              );
-            })}
+          <div className="flex flex-col gap-5">
+            {transactions.length != 0 &&
+              transactions.map((element) => {
+                return element.type === "expense" ? (
+                  <IncomeTransaction key={element.UID} {...element} />
+                ) : (
+                  ""
+                );
+              })}
+          </div>
         </div>
       </div>
     </div>
