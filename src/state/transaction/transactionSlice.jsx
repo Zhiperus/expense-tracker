@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
 
 const initialState = { value: [] };
 
@@ -14,9 +15,12 @@ const transactionSlice = createSlice({
         (transaction) => transaction.UID !== action.payload
       );
     },
+    set: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
 
-export const { add, del } = transactionSlice.actions;
+export const { add, del, set } = transactionSlice.actions;
 
 export default transactionSlice.reducer;

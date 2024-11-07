@@ -1,33 +1,38 @@
 import express from "express";
 import cors from "cors";
 import collection from "./mongoose.js";
+import mongoose from "mongoose";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get("/", cors(), async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.query;
 
   try {
     const check = await collection.findOne({ email: email });
 
-    const { name, transactions } = check;
+    console.log(check);
 
-    if (check) {
+    if (check != null) {
+      const { _id, name, transactions } = check;
+
       if (check.password === password) {
-        res.statusCode = 200;
-        res.json({ name: name, transactions: transactions });
+        res.json({
+          status: "success",
+          _id: _id,
+          name: name,
+          transactions: transactions,
+        });
       } else {
-        res.statusCode = 401;
-        res.json({ message: "Password is incorrect." });
+        res.status(401).send("Password is incorrect!");
       }
     } else {
-      res.statusCode = 404;
-      res.json({ message: "User does not exist." });
+      res.status(404).send("User does not exist!");
     }
   } catch (e) {
-    res.json(e);
+    console.log(e);
   }
 });
 
@@ -38,19 +43,40 @@ app.post("/signup", async (req, res) => {
     name: name,
     email: email,
     password: password,
+    transactions: [],
   };
 
   try {
     const check = await collection.findOne({ email: email });
 
     if (check) {
-      res.end("User already exists");
+      res.status(409).send("User already exists!");
     } else {
-      res.end("User created");
-      await collection.insertMany([data]);
+      const response = await collection.insertMany([data]);
+      res.json({
+        status: "success",
+        _id: response[0]._id,
+        name: name,
+      });
     }
   } catch (e) {
-    res.end(e);
+    console.log(e);
+  }
+});
+
+app.put("/logout", async (req, res) => {
+  const { _id, transactions } = req.body;
+
+  console.log(req);
+  console.log(req.body);
+
+  try {
+    await collection.updateOne(
+      { _id: new mongoose.Types.ObjectId(_id) },
+      { $set: { transactions: transactions } }
+    );
+  } catch (e) {
+    console.log(e);
   }
 });
 
