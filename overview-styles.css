@@ -1,0 +1,80 @@
+.overview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 30px;
+
+  h2 {
+    height: fit-content;
+    margin: 0;
+  }
+}
+
+.overview > * {
+  gap: 30px;
+}
+
+.overview__money > * {
+  gap: 30px;
+}
+
+.overview div {
+  border-radius: 15px;
+}
+
+.overview__balance-cards {
+  display: flex;
+}
+
+.overview__balance-cards > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 70px;
+  padding: 30px;
+  background-color: aliceblue;
+}
+
+#curr-bal-card {
+  background-color: var(--navbar-color);
+  color: white;
+}
+
+.overview__money {
+  display: flex;
+  flex: 1;
+}
+
+.lsection {
+  flex: 1.3;
+  display: flex;
+  flex-direction: column;
+}
+
+.rsection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.overview__money > div > div {
+  padding: 30px;
+  background-color: aliceblue;
+}
+
+#pots-card {
+  flex: 1;
+}
+
+#transactions-card {
+  flex: 3;
+}
+
+#budgets-card {
+  flex: 1.75;
+}
+
+#bills-card {
+  flex: 1.5;
+}

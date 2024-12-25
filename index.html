@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="./styles.css" rel="stylesheet" />
+    <link href="./global-styles.css" rel="stylesheet" />
+    <link href="./overview-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
@@ -21,16 +22,23 @@
       </nav>
       <div class="page">
         <div class="overview">
+          <h2>Overview</h2>
           <section class="overview__balance-cards">
-            <div id="curr-bal-card">Current Balance</div>
-            <div>Income</div>
-            <div>Expenses</div>
+            <div id="curr-bal-card">
+              <span>Current Balance</span><span>$</span>
+            </div>
+            <div><span>Income</span><span>$</span></div>
+            <div><span>Expenses</span><span>$</span></div>
           </section>
-          <section class="overview__transactions">
-            <div>Pots</div>
-            <div>Transactions</div>
-            <div>Budgets</div>
-            <div>Recurring Bills</div>
+          <section class="overview__money">
+            <div class="lsection">
+              <div id="pots-card">Pots</div>
+              <div id="transactions-card">Transactions</div>
+            </div>
+            <div class="rsection">
+              <div id="budgets-card">Budgets</div>
+              <div id="bills-card">Recurring Bills</div>
+            </div>
           </section>
         </div>
       </div>

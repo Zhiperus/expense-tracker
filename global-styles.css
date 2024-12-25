@@ -10,6 +10,13 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a,
+u {
+  text-decoration: none;
+  color: gainsboro;
 }
 
 .container {
@@ -20,12 +27,30 @@ body {
 nav {
   display: flex;
   flex-direction: column;
-  width: 16rem;
-  background-color: var(--navbar-color);
+  width: 30px;
+  padding-left: 40px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   color: whitesmoke;
-  padding-left: 40px;
+  background-color: var(--navbar-color);
+  transition-duration: 280ms;
+  transition-delay: 50ms;
+}
+
+nav > * {
+  visibility: hidden;
+  opacity: 0; /* Start fully transparent */
+  transition: opacity 280ms ease-in-out, visibility 0s linear 280ms;
+}
+
+nav:hover {
+  width: 30rem;
+}
+
+nav:hover > * {
+  visibility: visible;
+  opacity: 1; /* Fully visible */
+  transition: opacity 200ms ease-in-out, visibility 0s linear 0s;
 }
 
 .page_tabs {
@@ -41,33 +66,6 @@ nav {
 }
 
 .page {
-  flex-grow: 1;
+  width: 100%;
   padding: 40px;
-}
-
-.overview {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.overview div {
-  border-radius: 15px;
-}
-
-.overview__balance-cards {
-  display: flex;
-  flex: 1 0 100%;
-  justify-content: space-between;
-}
-
-.overview__balance-cards > div {
-  width: 300px;
-  height: 70px;
-  padding: 30px;
-  background-color: aliceblue;
-}
-
-#curr-bal-card {
-  background-color: var(--navbar-color);
-  color: white;
 }
