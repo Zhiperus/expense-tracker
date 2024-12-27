@@ -5,11 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="../css/global-styles.css" rel="stylesheet" />
+    <link href="../css/transactions-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
       <nav include-html="nav.html"></nav>
-      <div class="page">Transactions</div>
+      <div class="page">
+        <div class="container">
+          <form>
+            <div class="radio-buttons">
+              <label id="income-label"
+                >Income
+                <input
+                  type="radio"
+                  id="income"
+                  name="fav_language"
+                  value="CSS"
+                  hidden
+                  checked
+              /></label>
+              <label id="expense-label"
+                >Expense<input
+                  type="radio"
+                  id="expense"
+                  name="fav_language"
+                  value="HTML"
+                  hidden
+              /></label>
+            </div>
+            <label>Date </label>
+            <input type="date" />
+            <label>Time </label>
+            <input type="time" />
+            <label>Amount</label>
+            <input type="number" />
+            <label>Category</label>
+            <select id="category" name="category">
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+            </select>
+            <label>Account</label>
+            <select id="account" name="account">
+              <option value="cash">Cash</option>
+              <option value="card">Card</option>
+            </select>
+            <label>Note</label>
+            <input type="text" />
+            <button type="submit">Save</button>
+          </form>
+          <section class="transactions"></section>
+        </div>
+      </div>
     </div>
     <script src="../js/utilities/includeHTML.js"></script>
   </body>
