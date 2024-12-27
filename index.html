@@ -4,22 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="./global-styles.css" rel="stylesheet" />
-    <link href="./overview-styles.css" rel="stylesheet" />
+    <link href="./css/global-styles.css" rel="stylesheet" />
+    <link href="./css/overview-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
-      <nav>
-        <h2>finance</h2>
-        <div class="page_tabs">
-          <a href="./index.html">Overview</a>
-          <a href="./html/transactions.html">Transactions</a>
-          <a href="./html/budgets.html">Budgets</a>
-          <a href="./html/pots.html">Pots</a>
-          <a href="./html/recurring-bills.html">Recurring Bills</a>
-        </div>
-        <a id="minimize_button">Minimize Menu</a>
-      </nav>
+      <nav include-html="nav.html"></nav>
       <div class="page">
         <div class="overview">
           <h2>Overview</h2>
@@ -43,5 +33,6 @@
         </div>
       </div>
     </div>
+    <script src="./js/utilities/includeHTML.js"></script>
   </body>
 </html>

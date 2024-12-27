@@ -27,7 +27,7 @@ u {
 nav {
   display: flex;
   flex-direction: column;
-  width: 30px;
+  width: 30rem;
   padding-left: 40px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
@@ -38,31 +38,41 @@ nav {
 }
 
 nav > * {
-  visibility: hidden;
-  opacity: 0; /* Start fully transparent */
+  opacity: 1;
   transition: opacity 280ms ease-in-out, visibility 0s linear 280ms;
 }
 
-nav:hover {
-  width: 30rem;
+.nav--minimize {
+  width: 4rem;
+  padding: 10px;
 }
 
-nav:hover > * {
-  visibility: visible;
-  opacity: 1; /* Fully visible */
-  transition: opacity 200ms ease-in-out, visibility 0s linear 0s;
+.nav--minimize > * {
+  width: 10px;
+  opacity: 0;
+  transition: opacity 280ms ease-in-out, visibility 0s linear 0ms;
 }
 
-.page_tabs {
+.page-tabs {
   display: flex;
   flex-direction: column;
   margin-top: 40px;
   gap: 50px;
 }
 
-#minimize_button {
+#minimize-button {
   margin-top: auto;
   margin-bottom: 50px;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.open-logo {
+  visibility: hidden;
+}
+
+.open-logo--show {
+  visibility: visible;
 }
 
 .page {

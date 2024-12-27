@@ -4,22 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="../styles.css" rel="stylesheet" />
+    <link href="../css/global-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container">
-      <nav>
-        <h2>finance</h2>
-        <div class="page_tabs">
-          <a href="../index.html">Overview</a>
-          <a href="./transactions.html">Transactions</a>
-          <a href="./budgets.html">Budgets</a>
-          <a href="./pots.html">Pots</a>
-          <a href="./recurring-bills.html">Recurring Bills</a>
-        </div>
-        <a id="minimize_button">Minimize Menu</a>
-      </nav>
+      <nav include-html="nav.html"></nav>
       <div class="page">Budgets</div>
     </div>
+    <script src="../js/utilities/includeHTML.js"></script>
   </body>
 </html>
