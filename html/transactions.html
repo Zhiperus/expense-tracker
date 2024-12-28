@@ -19,44 +19,80 @@
                 <input
                   type="radio"
                   id="income"
-                  name="fav_language"
-                  value="CSS"
+                  name="expense-type"
+                  value="income"
                   hidden
                   checked
+                  required
               /></label>
               <label id="expense-label"
                 >Expense<input
                   type="radio"
                   id="expense"
-                  name="fav_language"
-                  value="HTML"
+                  name="expense-type"
+                  value="expense"
                   hidden
+                  required
               /></label>
             </div>
+
             <label>Date </label>
-            <input type="date" />
+            <input id="date" type="date" required />
+
             <label>Time </label>
-            <input type="time" />
+            <input id="time" type="time" required />
+
             <label>Amount</label>
-            <input type="number" />
+            <input id="amount" type="number" required />
+
             <label>Category</label>
-            <select id="category" name="category">
+            <select id="category" name="category" required>
               <option value="food">Food</option>
               <option value="transport">Transport</option>
             </select>
+
             <label>Account</label>
-            <select id="account" name="account">
+            <select id="account" name="account" required>
               <option value="cash">Cash</option>
               <option value="card">Card</option>
             </select>
+
             <label>Note</label>
-            <input type="text" />
+            <input id="note" type="text" required />
+
             <button type="submit">Save</button>
           </form>
-          <section class="transactions"></section>
+
+          <section class="transactions">
+            <h2>Transactions</h2>
+            <div class="transaction-cards">
+              <div class="income-card">
+                <div class="card-header">
+                  <span class="amount">+₱2,500</span>
+                  <span class="time-date">Dec 28, 2024 | 10:00 AM</span>
+                </div>
+                <div class="card-details">
+                  <p><strong>Category:</strong> Salary</p>
+                  <p><strong>Note:</strong> Monthly paycheck</p>
+                </div>
+              </div>
+
+              <div class="expense-card">
+                <div class="card-header">
+                  <span class="amount">-₱1,200</span>
+                  <span class="time-date">Dec 28, 2024 | 3:30 PM</span>
+                </div>
+                <div class="card-details">
+                  <p><strong>Category:</strong> Groceries</p>
+                  <p><strong>Note:</strong> Weekly grocery shopping</p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
     <script src="../js/utilities/includeHTML.js"></script>
+    <script src="../js/transactions.js"></script>
   </body>
 </html>

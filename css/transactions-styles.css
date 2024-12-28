@@ -1,3 +1,8 @@
+.container {
+  display: flex;
+  gap: 15px;
+}
+
 form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -24,11 +29,13 @@ label {
 }
 
 #income-label:has(input[type="radio"]:checked) {
+  transition-duration: 200ms;
   background-color: #4caf50;
   color: white;
 }
 
 #expense-label:has(input[type="radio"]:checked) {
+  transition-duration: 200ms;
   background-color: maroon;
   color: white;
 }
@@ -82,12 +89,91 @@ button:hover {
   background-color: #45a049;
 }
 
-@media (max-width: 400px) {
-  form {
-    width: 90%;
-    padding: 15px;
-  }
+.transactions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 50px;
+  padding-top: 15px;
 }
 
-.container {
+.transaction-cards {
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+  height: 100%;
+  gap: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  overflow-y: auto;
+}
+
+.transaction-cards > div {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem; /* Internal padding for content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: Arial, sans-serif;
+}
+
+.transaction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.card-header .amount {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.card-header .time-date {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.card-details {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  padding: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
+.card-details p {
+  margin: 0.3rem 0;
+  color: #333;
+}
+
+.card-details strong {
+  color: #555;
+}
+
+.income-card .amount {
+  color: #28a745;
+}
+
+.expense-card .amount {
+  color: #dc3545;
+}
+
+@media (max-width: 768px) {
+  .transaction-cards {
+    flex-direction: column;
+    align-items: center;
+  }
 }

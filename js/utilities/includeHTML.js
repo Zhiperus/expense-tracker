@@ -32,6 +32,7 @@ const handleMinimize = () => {
   navbar.getElementsByTagName("img")[0].classList.toggle("open-logo--show");
   console.log(navbar.getElementsByTagName("img")[0]);
 };
+
 includeHTML(() => {
   document
     .getElementById("minimize-button")
