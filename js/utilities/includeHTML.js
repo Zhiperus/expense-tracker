@@ -23,6 +23,7 @@ const includeHTML = (callback) => {
       return;
     }
   }
+
   if (typeof callback === "function") callback();
 };
 
@@ -30,10 +31,13 @@ const handleMinimize = () => {
   const navbar = document.getElementsByTagName("nav")[0];
   navbar.classList.toggle("nav--minimize");
   navbar.getElementsByTagName("img")[0].classList.toggle("open-logo--show");
-  console.log(navbar.getElementsByTagName("img")[0]);
 };
 
 includeHTML(() => {
+  const page = document.getElementsByTagName("Title")[0].innerHTML;
+  document
+    .getElementById(`${page.toLowerCase()}-anc`)
+    .classList.add("selected");
   document
     .getElementById("minimize-button")
     .addEventListener("click", handleMinimize);

@@ -27,14 +27,14 @@ u {
 nav {
   display: flex;
   flex-direction: column;
-  width: 30rem;
+  width: 400px;
   padding-left: 40px;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   color: whitesmoke;
   background-color: var(--navbar-color);
-  transition-duration: 280ms;
-  transition-delay: 50ms;
+  transition: width 280ms ease-in-out;
+  box-sizing: border-box;
 }
 
 nav > * {
@@ -58,6 +58,28 @@ nav > * {
   flex-direction: column;
   margin-top: 40px;
   gap: 50px;
+}
+
+.page-tabs a {
+  display: block;
+  padding: 10px 20px;
+  color: gainsboro;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+}
+
+.page-tabs a:hover {
+  background-color: #444;
+  color: white;
+}
+
+.page-tabs a.selected {
+  background-color: #575757;
+  color: white;
+  font-weight: bold;
+  border-left: 4px solid #ff9800;
 }
 
 #minimize-button {
