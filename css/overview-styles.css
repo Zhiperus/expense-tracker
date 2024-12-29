@@ -41,6 +41,10 @@
   color: white;
 }
 
+.number-field > strong {
+  font-size: x-large;
+}
+
 .overview__money {
   display: flex;
   flex: 1;
