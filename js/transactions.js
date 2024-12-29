@@ -1,4 +1,17 @@
+import uuidv4 from "./utilities/UUID.js";
+
 let transactions = [];
+
+const delTransaction = (Id) => {
+  const index = transactions.map((transaction) => transaction.Id).indexOf(Id);
+
+  transactions.splice(index, 1);
+  localStorage.setItem("transactions", JSON.stringify(transactions));
+
+  const transactionCards =
+    document.getElementsByClassName("transaction-cards")[0];
+  transactionCards.removeChild(transactionCards.children[index]);
+};
 
 const createCard = (transaction) => {
   let card = document.createElement("div");
@@ -17,8 +30,13 @@ const createCard = (transaction) => {
   <div class="card-details">
     <p><strong>Category:</strong> ${transaction.category}</p>
     <p><strong>Note:</strong> ${transaction.note}</p>
+    <button class="del-button"><i class="fa-solid fa-trash fa-xl"></i></button>
   </div>
   `;
+
+  card
+    .getElementsByClassName("del-button")[0]
+    .addEventListener("click", () => delTransaction(transaction.Id));
 
   return card;
 };
@@ -44,6 +62,7 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
     .split(" ");
 
   const transaction = {
+    Id: uuidv4(),
     type: form.income.checked === true ? "income" : "expense",
     dateObj,
     date: `${monthStr} ${dayOfMonth}, ${yearStr}`,
