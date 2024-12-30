@@ -9,7 +9,7 @@ const delTransaction = (Id) => {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 
   const transactionCards =
-    document.getElementsByClassName("transaction-cards")[0];
+    document.getElementsByClassName("transaction-list")[0];
   transactionCards.removeChild(transactionCards.children[index]);
 };
 

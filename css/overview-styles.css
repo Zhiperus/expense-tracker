@@ -2,83 +2,52 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 30px;
-
-  h2 {
+  gap: 30px; }
+  .overview h2 {
     height: fit-content;
-    margin: 0;
-  }
-}
+    margin: 0; }
+  .overview > * {
+    gap: 30px; }
+  .overview div {
+    border-radius: 15px; }
 
-.overview > * {
-  gap: 30px;
-}
+.balance-overview-cards {
+  display: flex; }
+  .balance-overview-cards > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 70px;
+    padding: 30px;
+    background-color: aliceblue; }
+    .balance-overview-cards > div:nth-child(1) {
+      background-color: var(--navbar-color);
+      color: white; }
 
-.overview__money > * {
-  gap: 30px;
-}
+.amount-field > strong {
+  font-size: x-large; }
 
-.overview div {
-  border-radius: 15px;
-}
-
-.overview__balance-cards {
+.financial-overview {
   display: flex;
-}
-
-.overview__balance-cards > div {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  height: 70px;
-  padding: 30px;
-  background-color: aliceblue;
-}
-
-#curr-bal-card {
-  background-color: var(--navbar-color);
-  color: white;
-}
-
-.number-field > strong {
-  font-size: x-large;
-}
-
-.overview__money {
-  display: flex;
-  flex: 1;
-}
-
-.lsection {
-  flex: 1.3;
-  display: flex;
-  flex-direction: column;
-}
-
-.rsection {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.overview__money > div > div {
-  padding: 30px;
-  background-color: aliceblue;
-}
-
-#pots-card {
-  flex: 1;
-}
-
-#transactions-card {
-  flex: 3;
-}
-
-#budgets-card {
-  flex: 1.75;
-}
-
-#bills-card {
-  flex: 1.5;
-}
+  flex: 1; }
+  .financial-overview > * {
+    gap: 30px; }
+  .financial-overview > div {
+    display: flex;
+    flex-direction: column; }
+    .financial-overview > div > div {
+      padding: 30px;
+      background-color: aliceblue; }
+    .financial-overview > div.left-section {
+      flex: 1.3; }
+    .financial-overview > div.right-section {
+      flex: 1; }
+  .financial-overview #pots-card {
+    flex: 1; }
+  .financial-overview #transactions-card {
+    flex: 3; }
+  .financial-overview #budgets-card {
+    flex: 1.75; }
+  .financial-overview #bills-card {
+    flex: 1.5; }

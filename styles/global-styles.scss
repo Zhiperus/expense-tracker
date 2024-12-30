@@ -1,0 +1,126 @@
+// Variables
+$background-color: #f2f2f2;
+$navbar-color: #232226;
+$text-color: gainsboro;
+$link-hover-bg: #444;
+$link-selected-bg: #575757;
+$link-selected-border: #ff9800;
+$link-hover-color: white;
+$nav-width: 400px;
+$nav-minimized-width: 4rem;
+$nav-padding: 40px;
+$transition-duration: 280ms;
+
+// Root Variables
+:root {
+  --background-color: #{$background-color};
+  --navbar-color: #{$navbar-color};
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: $background-color;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a,
+u {
+  text-decoration: none;
+  color: $text-color;
+}
+
+.flex-container {
+  display: flex;
+  height: 100%;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  width: $nav-width;
+  padding-left: $nav-padding;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  color: whitesmoke;
+  background-color: $navbar-color;
+  transition: width $transition-duration ease-in-out;
+  box-sizing: border-box;
+
+  > * {
+    opacity: 1;
+    transition: opacity $transition-duration ease-in-out,
+      visibility 0s linear $transition-duration;
+  }
+
+  &.nav--minimize {
+    width: $nav-minimized-width;
+    padding: 10px;
+
+    > * {
+      width: 10px;
+      opacity: 0;
+      transition: opacity $transition-duration ease-in-out,
+        visibility 0s linear 0ms;
+    }
+  }
+}
+
+.page-tabs {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  gap: 50px;
+
+  a {
+    display: block;
+    padding: 10px 20px;
+    color: $text-color;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+
+    &:hover {
+      background-color: $link-hover-bg;
+      color: $link-hover-color;
+    }
+
+    &.selected {
+      background-color: $link-selected-bg;
+      color: $link-hover-color;
+      font-weight: bold;
+      border-left: 4px solid $link-selected-border;
+    }
+  }
+}
+
+#minimize-button {
+  margin-top: auto;
+  margin-bottom: 50px;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.open-logo {
+  visibility: hidden;
+
+  &--show {
+    visibility: visible;
+  }
+}
+
+.main-content {
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out; // Fast transition
+
+  &.fade-out {
+    opacity: 0;
+  }
+
+  width: 100%;
+  padding: $nav-padding;
+}

@@ -1,12 +1,11 @@
-.container {
+.main-content {
   display: flex;
-  gap: 15px;
-}
+  gap: 15px; }
 
 form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 2em 2em 2em 2em 2em 2em 2em;
+  grid-template-rows: repeat(7, 2em);
   column-gap: 50px;
   row-gap: 10px;
   align-items: center;
@@ -17,170 +16,125 @@ form {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-}
+  font-family: Arial, sans-serif; }
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333; }
+    form label#income-label:has(input[type="radio"]:checked) {
+      transition-duration: 200ms;
+      background-color: #4caf50;
+      color: white; }
+    form label#expense-label:has(input[type="radio"]:checked) {
+      transition-duration: 200ms;
+      background-color: maroon;
+      color: white; }
+  form .transaction-type-selection {
+    grid-column: span 2;
+    display: flex;
+    text-align: center; }
+    form .transaction-type-selection > label {
+      flex: 1;
+      padding: 10px; }
+  form input[type="date"],
+  form input[type="time"],
+  form input[type="number"],
+  form input[type="text"],
+  form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.3s; }
+    form input[type="date"]:focus,
+    form input[type="time"]:focus,
+    form input[type="number"]:focus,
+    form input[type="text"]:focus,
+    form select:focus {
+      border-color: #4caf50;
+      outline: none;
+      box-shadow: 0 0 4px rgba(76, 175, 80, 0.3); }
+  form .submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; }
+    form .submit-button:hover {
+      background-color: #45a049; }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  font-size: 14px;
-  color: #333;
-}
-
-#income-label:has(input[type="radio"]:checked) {
-  transition-duration: 200ms;
-  background-color: #4caf50;
-  color: white;
-}
-
-#expense-label:has(input[type="radio"]:checked) {
-  transition-duration: 200ms;
-  background-color: maroon;
-  color: white;
-}
-
-.radio-buttons {
-  grid-column: span 2;
-  display: flex;
-  text-align: center;
-}
-
-.radio-buttons > label {
-  flex: 1;
-  padding: 10px;
-}
-
-input[type="date"],
-input[type="time"],
-input[type="number"],
-input[type="text"],
-select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  box-sizing: border-box;
-  background-color: #fff;
-  transition: border-color 0.3s;
-}
-
-input:focus,
-select:focus {
-  border-color: #4caf50;
-  outline: none;
-  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
-}
-
-.submit-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #45a049;
-}
-
-.transactions {
+.transaction-history {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   height: 90%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 50px 0 15px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 50px;
-  padding-top: 15px;
-}
-
-.transaction-cards {
-  display: flex;
-  flex-direction: column;
-  width: inherit;
-  height: 100%;
-  gap: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
-  overflow-y: auto;
-}
-
-.transaction-cards > div {
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem; /* Internal padding for content */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  font-family: Arial, sans-serif;
-}
-
-.transaction-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.card-header .amount {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-.card-header .time-date {
-  font-size: 0.85rem;
-  color: #777;
-}
-
-.card-details {
-  font-size: 0.9rem;
-  line-height: 1.3;
-  padding: 0.5rem;
-  border-top: 1px solid #eee;
-}
-
-.card-details p {
-  margin: 0.3rem 0;
-  color: #333;
-}
-
-.card-details strong {
-  color: #555;
-}
-
-.income-card .amount {
-  color: #28a745;
-}
-
-.expense-card .amount {
-  color: #dc3545;
-}
-
-.del-button {
-  cursor: pointer;
-  background-color: #ffffff;
-  border: 0px;
-  margin-left: 98%;
-}
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  .transaction-history .transaction-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    padding: 0 20px;
+    overflow-y: auto; }
+    .transaction-history .transaction-list > div {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-family: Arial, sans-serif; }
+      .transaction-history .transaction-list > div:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+      .transaction-history .transaction-list > div .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem; }
+        .transaction-history .transaction-list > div .card-header .amount {
+          font-size: 1.4rem;
+          font-weight: bold; }
+          .transaction-history .transaction-list > div .card-header .amount.income-card {
+            color: #4caf50; }
+          .transaction-history .transaction-list > div .card-header .amount.expense-card {
+            color: maroon; }
+        .transaction-history .transaction-list > div .card-header .time-date {
+          font-size: 0.85rem;
+          color: #777; }
+      .transaction-history .transaction-list > div .card-details {
+        font-size: 0.9rem;
+        line-height: 1.3;
+        padding: 0.5rem;
+        border-top: 1px solid #eee; }
+        .transaction-history .transaction-list > div .card-details p {
+          margin: 0.3rem 0;
+          color: #333; }
+          .transaction-history .transaction-list > div .card-details p strong {
+            color: #555; }
+    .transaction-history .transaction-list .del-button {
+      cursor: pointer;
+      background-color: #ffffff;
+      border: none;
+      margin-left: 98%; }
 
 @media (max-width: 768px) {
   .transaction-cards {
     flex-direction: column;
-    align-items: center;
-  }
-}
+    align-items: center; } }

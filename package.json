@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "css": "node-sass styles -o css",
+    "css:watch": "npm run css && node-sass styles -wo css"
+  },
+  "dependencies": {
+    "node-sass": "^9.0.0"
+  }
+}

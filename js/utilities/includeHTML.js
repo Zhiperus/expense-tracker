@@ -35,10 +35,28 @@ const handleMinimize = () => {
 
 includeHTML(() => {
   const page = document.getElementsByTagName("Title")[0].innerHTML;
+
   document
     .getElementById(`${page.toLowerCase()}-anc`)
     .classList.add("selected");
+
   document
     .getElementById("minimize-button")
     .addEventListener("click", handleMinimize);
+
+  const links = document.querySelectorAll("a");
+
+  links.forEach((link) => {
+    if (link.id === "minimize-button") return;
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      document
+        .getElementsByClassName("main-content")[0]
+        .classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = link.href;
+      }, 100); // Match the 200ms transition duration
+    });
+  });
 });

@@ -8,31 +8,31 @@
     <link href="./css/overview-styles.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container">
+    <div class="flex-container">
       <nav include-html="nav.html"></nav>
-      <div class="page">
+      <div class="main-content">
         <div class="overview">
           <h2>Overview</h2>
-          <section class="overview__balance-cards">
-            <div id="curr-bal-card">
-              <span>Current Balance</span
-              ><span class="number-field"><strong>₱ </strong></span>
+          <section class="balance-overview-cards">
+            <div id="current-balance-card">
+              <span>Current Balance</span>
+              <span class="amount-field"><strong>₱</strong></span>
             </div>
-            <div>
-              <span>Income</span
-              ><span class="number-field"><strong>₱</strong></span>
+            <div id="income-card">
+              <span>Total Income</span>
+              <span class="amount-field"><strong>₱</strong></span>
             </div>
-            <div>
-              <span>Expenses</span
-              ><span class="number-field"><strong>-₱</strong></span>
+            <div id="expenses-card">
+              <span>Total Expenses</span>
+              <span class="amount-field"><strong>-₱</strong></span>
             </div>
           </section>
-          <section class="overview__money">
-            <div class="lsection">
+          <section class="financial-overview">
+            <div class="left-section">
               <div id="pots-card">Pots</div>
               <div id="transactions-card">Transactions</div>
             </div>
-            <div class="rsection">
+            <div class="right-section">
               <div id="budgets-card">Budgets</div>
               <div id="bills-card">Recurring Bills</div>
             </div>

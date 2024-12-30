@@ -8,66 +8,67 @@
     <link href="../css/transactions-styles.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container">
+    <div class="flex-container">
       <nav include-html="nav.html"></nav>
-      <div class="page">
-        <div class="container">
-          <form>
-            <div class="radio-buttons">
-              <label id="income-label"
-                >Income
-                <input
-                  type="radio"
-                  id="income"
-                  name="expense-type"
-                  value="income"
-                  hidden
-                  checked
-                  required
-              /></label>
-              <label id="expense-label"
-                >Expense<input
-                  type="radio"
-                  id="expense"
-                  name="expense-type"
-                  value="expense"
-                  hidden
-                  required
-              /></label>
-            </div>
+      <div class="main-content">
+        <form class="transaction-form">
+          <div class="transaction-type-selection">
+            <label id="income-label">
+              Income
+              <input
+                type="radio"
+                id="income"
+                name="expense-type"
+                value="income"
+                hidden
+                checked
+                required
+              />
+            </label>
+            <label id="expense-label">
+              Expense
+              <input
+                type="radio"
+                id="expense"
+                name="expense-type"
+                value="expense"
+                hidden
+                required
+              />
+            </label>
+          </div>
 
-            <label>Date </label>
-            <input id="date" type="date" required />
+          <label for="date">Date </label>
+          <input id="date" type="date" required />
 
-            <label>Time </label>
-            <input id="time" type="time" required />
+          <label for="time">Time </label>
+          <input id="time" type="time" required />
 
-            <label>Amount</label>
-            <input id="amount" type="number" required />
+          <label for="amount">Amount</label>
+          <input id="amount" type="number" required />
 
-            <label>Category</label>
-            <select id="category" name="category" required>
-              <option value="food">Food</option>
-              <option value="transport">Transport</option>
-            </select>
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="food">Food</option>
+            <option value="transport">Transport</option>
+          </select>
 
-            <label>Account</label>
-            <select id="account" name="account" required>
-              <option value="cash">Cash</option>
-              <option value="card">Card</option>
-            </select>
+          <label for="account">Account</label>
+          <select id="account" name="account" required>
+            <option value="cash">Cash</option>
+            <option value="card">Card</option>
+          </select>
 
-            <label>Note</label>
-            <input id="note" type="text" />
+          <label for="note">Note</label>
+          <input id="note" type="text" />
 
-            <button class="submit-button" type="submit">Save</button>
-          </form>
+          <button class="submit-button" type="submit">Save</button>
+        </form>
 
-          <section class="transactions">
-            <h2>Transactions</h2>
-            <div class="transaction-cards"></div>
-          </section>
-        </div>
+        <section class="transaction-history">
+          <h2>Transactions</h2>
+          <div class="transaction-list"></div>
+        </section>
       </div>
     </div>
     <script
