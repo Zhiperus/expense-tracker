@@ -1,9 +1,11 @@
-transactions = [];
+import Cookies from "./utilities/cookies.js";
+
+let transactions = [];
 let income = 0;
 let expense = 0;
 
-transactions = JSON.parse(localStorage.getItem("transactions"))
-  ? JSON.parse(localStorage.getItem("transactions"))
+transactions = JSON.parse(Cookies.getCookie("transactions"))
+  ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
 
 transactions.forEach((transaction) => {
@@ -12,9 +14,9 @@ transactions.forEach((transaction) => {
     : (expense += transaction.amount);
 });
 
-document.getElementsByClassName("number-field")[0].children[0].innerHTML +=
+document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
   income + expense;
-document.getElementsByClassName("number-field")[1].children[0].innerHTML +=
+document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
   income;
-document.getElementsByClassName("number-field")[2].children[0].innerHTML +=
+document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
   Math.abs(expense);

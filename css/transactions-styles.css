@@ -78,7 +78,8 @@ form {
   align-items: center;
   width: 100%;
   height: 90%;
-  padding: 50px 0 15px;
+  padding: 50px;
+  padding-top: 15px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
@@ -88,7 +89,8 @@ form {
     width: 100%;
     height: 100%;
     gap: 20px;
-    padding: 0 20px;
+    padding-right: 20px;
+    padding-left: 20px;
     overflow-y: auto; }
     .transaction-history .transaction-list > div {
       background: #ffffff;
@@ -103,6 +105,10 @@ form {
       .transaction-history .transaction-list > div:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
+      .transaction-history .transaction-list > div.income-card {
+        color: #4caf50; }
+      .transaction-history .transaction-list > div.expense-card {
+        color: maroon; }
       .transaction-history .transaction-list > div .card-header {
         display: flex;
         justify-content: space-between;
@@ -111,10 +117,6 @@ form {
         .transaction-history .transaction-list > div .card-header .amount {
           font-size: 1.4rem;
           font-weight: bold; }
-          .transaction-history .transaction-list > div .card-header .amount.income-card {
-            color: #4caf50; }
-          .transaction-history .transaction-list > div .card-header .amount.expense-card {
-            color: maroon; }
         .transaction-history .transaction-list > div .card-header .time-date {
           font-size: 0.85rem;
           color: #777; }

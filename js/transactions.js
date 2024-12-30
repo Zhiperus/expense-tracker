@@ -1,4 +1,5 @@
 import uuidv4 from "./utilities/UUID.js";
+import Cookies from "./utilities/cookies.js";
 
 let transactions = [];
 
@@ -6,7 +7,8 @@ const delTransaction = (Id) => {
   const index = transactions.map((transaction) => transaction.Id).indexOf(Id);
 
   transactions.splice(index, 1);
-  localStorage.setItem("transactions", JSON.stringify(transactions));
+
+  Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
 
   const transactionCards =
     document.getElementsByClassName("transaction-list")[0];
@@ -41,12 +43,11 @@ const createCard = (transaction) => {
   return card;
 };
 
-transactions = JSON.parse(localStorage.getItem("transactions"))
-  ? JSON.parse(localStorage.getItem("transactions"))
+transactions = JSON.parse(Cookies.getCookie("transactions"))
+  ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
 
-const transactionCards =
-  document.getElementsByClassName("transaction-cards")[0];
+const transactionCards = document.getElementsByClassName("transaction-list")[0];
 for (let i = 0; i < transactions.length; i++) {
   transactionCards.appendChild(createCard(transactions[i]));
 }
@@ -80,7 +81,7 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
   if (transactions.length === 0) {
     transactions.push(transaction);
 
-    document.getElementsByClassName("transaction-cards")[0].appendChild(card);
+    document.getElementsByClassName("transaction-list")[0].appendChild(card);
   } else {
     for (; i < transactions.length; i++) {
       if (
@@ -97,9 +98,8 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
     }
   }
 
-  localStorage.setItem("transactions", JSON.stringify(transactions));
+  Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
 
-  let next =
-    document.getElementsByClassName("transaction-cards")[0].children[i];
+  let next = document.getElementsByClassName("transaction-list")[0].children[i];
   next.parentNode.insertBefore(card, next);
 };
