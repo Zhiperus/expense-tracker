@@ -10,38 +10,41 @@
   <body>
     <div class="flex-container">
       <nav include-html="nav.html"></nav>
-      <div class="main-content">
-        <div class="overview">
+      <main class="main-content">
+        <section class="overview">
           <h2>Overview</h2>
-          <section class="balance-overview-cards">
-            <div id="current-balance-card">
+          <div class="balance-overview-cards">
+            <div class="card" id="current-balance-card">
               <span>Current Balance</span>
               <span class="amount-field"><strong>₱</strong></span>
             </div>
-            <div id="income-card">
+            <div class="card" id="income-card">
               <span>Total Income</span>
               <span class="amount-field"><strong>₱</strong></span>
             </div>
-            <div id="expenses-card">
+            <div class="card" id="expenses-card">
               <span>Total Expenses</span>
               <span class="amount-field"><strong>-₱</strong></span>
             </div>
-          </section>
-          <section class="financial-overview">
-            <div class="left-section">
-              <div id="pots-card">Pots</div>
-              <div id="transactions-card">
-                Transactions
+          </div>
+          <div class="financial-overview">
+            <section class="left-section">
+              <div class="card" id="pots-card">Pots</div>
+              <div class="card" id="transactions-card">
+                <header>
+                  <h3>Transactions</h3>
+                  <a href="./html/transactions.html">View All</a>
+                </header>
                 <div class="transaction-list"></div>
               </div>
-            </div>
-            <div class="right-section">
-              <div id="budgets-card">Budgets</div>
-              <div id="bills-card">Recurring Bills</div>
-            </div>
-          </section>
-        </div>
-      </div>
+            </section>
+            <section class="right-section">
+              <div class="card" id="budgets-card">Budgets</div>
+              <div class="card" id="bills-card">Recurring Bills</div>
+            </section>
+          </div>
+        </section>
+      </main>
     </div>
     <script src="./js/utilities/includeHTML.js"></script>
     <script src="./js/overview.js" type="module"></script>

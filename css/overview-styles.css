@@ -8,8 +8,6 @@
     margin: 0; }
   .overview > * {
     gap: 30px; }
-  .overview div {
-    border-radius: 15px; }
 
 .balance-overview-cards {
   display: flex; }
@@ -20,7 +18,8 @@
     gap: 30px;
     height: 70px;
     padding: 30px;
-    background-color: aliceblue; }
+    background-color: white;
+    border-radius: 20px; }
     .balance-overview-cards > div:nth-child(1) {
       background-color: var(--navbar-color);
       color: white; }
@@ -33,21 +32,78 @@
   flex: 1; }
   .financial-overview > * {
     gap: 30px; }
-  .financial-overview > div {
+  .financial-overview > .left-section,
+  .financial-overview .right-section {
     display: flex;
     flex-direction: column; }
-    .financial-overview > div > div {
+    .financial-overview > .left-section > .card,
+    .financial-overview .right-section > .card {
       padding: 30px;
-      background-color: aliceblue; }
-    .financial-overview > div.left-section {
+      background-color: white;
+      border-radius: 20px; }
+    .financial-overview > .left-section.left-section,
+    .financial-overview .right-section.left-section {
       flex: 1.3; }
-    .financial-overview > div.right-section {
+    .financial-overview > .left-section.right-section,
+    .financial-overview .right-section.right-section {
       flex: 1; }
   .financial-overview #pots-card {
     flex: 1; }
   .financial-overview #transactions-card {
-    flex: 3; }
+    flex: 5; }
+    .financial-overview #transactions-card > header {
+      display: flex;
+      justify-content: space-between; }
+      .financial-overview #transactions-card > header > a {
+        color: gray; }
+    .financial-overview #transactions-card .transaction-list {
+      display: flex;
+      padding: 1px;
+      flex-direction: column;
+      overflow-y: auto;
+      gap: 2px;
+      width: 100%;
+      height: 350px;
+      background-color: var(--background-color); }
+      .financial-overview #transactions-card .transaction-list > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        background-color: aliceblue;
+        height: 75px; }
+        .financial-overview #transactions-card .transaction-list > div > div {
+          display: flex;
+          flex-direction: column;
+          align-items: center; }
   .financial-overview #budgets-card {
     flex: 1.75; }
   .financial-overview #bills-card {
     flex: 1.5; }
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: aliceblue;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+  .transaction span:first-child {
+    font-weight: bold;
+    color: #333;
+    flex: 1; }
+  .transaction div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; }
+    .transaction div span:first-child {
+      font-size: 1.1rem;
+      font-weight: bold; }
+    .transaction div span.income {
+      color: green; }
+    .transaction div span.expense {
+      color: maroon; }
+    .transaction div span:last-child {
+      color: gray;
+      font-size: 0.9rem; }
