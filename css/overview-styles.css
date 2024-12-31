@@ -54,6 +54,8 @@
     .financial-overview #transactions-card > header {
       display: flex;
       justify-content: space-between; }
+      .financial-overview #transactions-card > header > h3 {
+        margin-top: 0; }
       .financial-overview #transactions-card > header > a {
         color: gray; }
     .financial-overview #transactions-card .transaction-list {

@@ -33,6 +33,24 @@ u {
   color: $text-color;
 }
 
+h1 {
+  font-size: 50px;
+}
+body {
+  font: 20px Helvetica, sans-serif;
+  color: #333;
+}
+article {
+  display: block;
+  text-align: left;
+  width: 650px;
+  margin: 0 auto;
+}
+a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
 .flex-container {
   display: flex;
   height: 100%;
@@ -49,6 +67,15 @@ nav {
   background-color: $navbar-color;
   transition: width $transition-duration ease-in-out;
   box-sizing: border-box;
+
+  .app-title {
+    font-family: "Arial", sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: #4caf50; /* A pleasant green tone to match the buttons */
+    letter-spacing: 2px;
+    margin: 20px 0;
+  }
 
   > * {
     opacity: 1;
