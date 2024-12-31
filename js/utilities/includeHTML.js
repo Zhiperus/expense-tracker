@@ -31,6 +31,10 @@ const handleMinimize = () => {
   const navbar = document.getElementsByTagName("nav")[0];
   navbar.classList.toggle("nav--minimize");
   navbar.getElementsByTagName("img")[0].classList.toggle("open-logo--show");
+  console.log(navbar.getElementsByTagName("span")[0]);
+  navbar
+    .getElementsByTagName("span")[0]
+    .classList.toggle("minimize-button--hide");
 };
 
 includeHTML(() => {

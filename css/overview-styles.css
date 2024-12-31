@@ -41,6 +41,16 @@
       padding: 30px;
       background-color: white;
       border-radius: 20px; }
+      .financial-overview > .left-section > .card > header,
+      .financial-overview .right-section > .card > header {
+        display: flex;
+        justify-content: space-between; }
+        .financial-overview > .left-section > .card > header > a,
+        .financial-overview .right-section > .card > header > a {
+          color: gray; }
+        .financial-overview > .left-section > .card > header > h3,
+        .financial-overview .right-section > .card > header > h3 {
+          margin-top: 0; }
     .financial-overview > .left-section.left-section,
     .financial-overview .right-section.left-section {
       flex: 1.3; }
@@ -48,16 +58,9 @@
     .financial-overview .right-section.right-section {
       flex: 1; }
   .financial-overview #pots-card {
-    flex: 1; }
+    flex: 2; }
   .financial-overview #transactions-card {
     flex: 5; }
-    .financial-overview #transactions-card > header {
-      display: flex;
-      justify-content: space-between; }
-      .financial-overview #transactions-card > header > h3 {
-        margin-top: 0; }
-      .financial-overview #transactions-card > header > a {
-        color: gray; }
     .financial-overview #transactions-card .transaction-list {
       display: flex;
       padding: 1px;
@@ -65,7 +68,7 @@
       overflow-y: auto;
       gap: 2px;
       width: 100%;
-      height: 350px;
+      height: 320px;
       background-color: var(--background-color); }
       .financial-overview #transactions-card .transaction-list > div {
         display: flex;

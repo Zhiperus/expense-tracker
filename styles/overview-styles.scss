@@ -65,6 +65,18 @@ $text-color: #333;
       padding: 30px;
       background-color: white;
       border-radius: 20px;
+
+      > header {
+        display: flex;
+        justify-content: space-between;
+
+        > a {
+          color: gray;
+        }
+        > h3 {
+          margin-top: 0;
+        }
+      }
     }
 
     &.left-section {
@@ -78,24 +90,11 @@ $text-color: #333;
 
   // Cards in Financial Overview
   #pots-card {
-    flex: 1;
+    flex: 2;
   }
 
   #transactions-card {
     flex: 5;
-
-    > header {
-      display: flex;
-      justify-content: space-between;
-
-      > h3 {
-        margin-top: 0;
-      }
-
-      > a {
-        color: gray;
-      }
-    }
 
     .transaction-list {
       display: flex;
@@ -104,7 +103,7 @@ $text-color: #333;
       overflow-y: auto;
       gap: 2px;
       width: 100%;
-      height: 350px;
+      height: 320px;
       background-color: var(--background-color);
 
       > div {

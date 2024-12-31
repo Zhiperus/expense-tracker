@@ -9,29 +9,17 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f2f2f2;
-  font-family: Arial, Helvetica, sans-serif; }
-
-a,
-u {
-  text-decoration: none;
-  color: gainsboro; }
+  font: 20px Helvetica, sans-serif;
+  color: #333; }
 
 h1 {
   font-size: 50px; }
-
-body {
-  font: 20px Helvetica, sans-serif;
-  color: #333; }
 
 article {
   display: block;
   text-align: left;
   width: 650px;
   margin: 0 auto; }
-
-a:hover {
-  color: #333;
-  text-decoration: none; }
 
 .flex-container {
   display: flex;
@@ -94,6 +82,8 @@ nav {
   margin-bottom: 50px;
   cursor: pointer;
   opacity: 1; }
+  #minimize-button .minimize-button--hide {
+    visibility: hidden; }
 
 .open-logo {
   visibility: hidden; }
