@@ -116,6 +116,19 @@ form {
   border: 1px solid $border-color;
   box-shadow: 0 4px 8px $shadow-light;
 
+  > .header {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 20px;
+
+    > .time-filter > select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+
   .transaction-list {
     display: flex;
     flex-direction: column;

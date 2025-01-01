@@ -2,22 +2,27 @@ import uuidv4 from "./utilities/UUID.js";
 import Cookies from "./utilities/cookies.js";
 
 let transactions = [];
+const transactionCards = document.getElementsByClassName("transaction-list")[0];
 
 const delTransaction = (Id) => {
-  const index = transactions.map((transaction) => transaction.Id).indexOf(Id);
+  const arrayIndex = transactions
+    .map((transaction) => transaction.Id)
+    .indexOf(Id);
+  const nodeIndex = Array.from(transactionCards.children)
+    .map((transaction) => transaction.uid)
+    .indexOf(Id);
 
-  transactions.splice(index, 1);
+  transactions.splice(arrayIndex, 1);
 
   Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
 
-  const transactionCards =
-    document.getElementsByClassName("transaction-list")[0];
-  transactionCards.removeChild(transactionCards.children[index]);
+  transactionCards.removeChild(transactionCards.children[nodeIndex]);
 };
 
 const createCard = (transaction) => {
   let card = document.createElement("div");
   card.classList.add(`${transaction.type}-card`);
+  card.uid = transaction.Id;
   card.innerHTML = `
   <div class="card-header">
     <span class="amount">
@@ -47,7 +52,6 @@ transactions = JSON.parse(Cookies.getCookie("transactions"))
   ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
 
-const transactionCards = document.getElementsByClassName("transaction-list")[0];
 for (let i = 0; i < transactions.length; i++) {
   transactionCards.appendChild(createCard(transactions[i]));
 }
@@ -85,7 +89,8 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
   } else {
     for (; i < transactions.length; i++) {
       if (
-        Number(transactions[i].dateObj) < Number(transaction.dateObj) ||
+        Date.parse(transactions[i].dateObj) <=
+          Date.parse(transaction.dateObj) ||
         i === transactions.length - 1
       ) {
         transactions = [
@@ -103,3 +108,55 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
   let next = document.getElementsByClassName("transaction-list")[0].children[i];
   next.parentNode.insertBefore(card, next);
 };
+
+const incomeOptions =
+  "<option value='Salary'>Salary</option><option value='Allowance'>Allowance</option><option value='Other'>Other</option>";
+const expenseOptions =
+  "<option value='Food'>Food</option><option value='Transport'>Transport</option><option value='Apparel'>Apparel</option><option value='Education'>Education</option><option value='Other'>Other</option>";
+
+document.getElementsByName("transaction-type").forEach((radioButton) => {
+  radioButton.addEventListener(
+    "click",
+    () =>
+      (document.getElementById("category").innerHTML =
+        radioButton.id === "income" ? incomeOptions : expenseOptions)
+  );
+});
+
+const timeFilter = (event) => {
+  const choice = event.target.value;
+  const dateObj = new Date();
+
+  switch (choice) {
+    case "today":
+      dateObj.setHours(0, 0, 0, 0);
+      break;
+    case "this_week":
+      const startOfWeek =
+        dateObj.getDate() - dateObj.getDay() < 0
+          ? dateObj.getDate()
+          : dateObj.getDate() - dateObj.getDay();
+      dateObj.setDate(startOfWeek);
+      dateObj.setHours(0, 0, 0, 0);
+      break;
+    case "this_month":
+      dateObj.setDate(1);
+      dateObj.setHours(0, 0, 0, 0);
+      break;
+
+    case "all_time":
+      dateObj.setFullYear(1970);
+      break;
+  }
+
+  transactionCards.innerHTML = "";
+  transactions
+    .filter(
+      (transaction) => Date.parse(transaction.dateObj) > Date.parse(dateObj)
+    )
+    .forEach((transaction) =>
+      transactionCards.appendChild(createCard(transaction))
+    );
+};
+
+document.getElementById("select-time").addEventListener("change", timeFilter);

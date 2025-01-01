@@ -83,6 +83,15 @@ form {
   background-color: white;
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  .transaction-history > .header {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 20px; }
+    .transaction-history > .header > .time-filter > select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px; }
   .transaction-history .transaction-list {
     display: flex;
     flex-direction: column;
