@@ -1,0 +1,171 @@
+.main-content {
+  display: flex;
+  gap: 160px; }
+
+form {
+  position: sticky;
+  top: 20px;
+  /* Keeps form 20px from the top while scrolling */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 2em);
+  column-gap: 50px;
+  row-gap: 10px;
+  align-items: center;
+  width: 300px;
+  height: fit-content;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  form h3 {
+    grid-column: span 2;
+    text-align: center; }
+  form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333; }
+  form input[type="number"],
+  form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #fff;
+    transition: border-color 0.3s; }
+    form input[type="number"]:focus,
+    form select:focus {
+      border-color: #4caf50;
+      outline: none;
+      box-shadow: 0 0 4px rgba(76, 175, 80, 0.3); }
+  form .submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; }
+    form .submit-button:hover {
+      background-color: #45a049; }
+
+.budgets {
+  flex: 3;
+  max-width: 800px;
+  height: fit-content;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards; }
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 0.2s; }
+
+.header h1 {
+  margin: 0;
+  color: #333; }
+
+.overview {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #e9f5f2;
+  border-radius: 6px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 0.4s; }
+
+.overview div {
+  text-align: center; }
+
+.overview div h2 {
+  margin: 5px 0;
+  font-size: 1.2em;
+  color: #2d6a4f; }
+
+.categories {
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 0.6s; }
+
+.category {
+  margin-bottom: 10px; }
+
+.category label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+  margin-bottom: 4px; }
+
+.progress-bar {
+  position: relative;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden; }
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background: #2d6a4f;
+  width: 0;
+  animation: growBar 1s forwards; }
+
+.charts {
+  margin-top: 20px;
+  text-align: center;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 0.8s; }
+
+.charts img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; }
+
+.actions {
+  margin-top: 20px;
+  text-align: center;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 1s; }
+
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 1.2s; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }
+
+@keyframes growBar {
+  from {
+    width: 0; }
+  to {
+    width: 100%; } }

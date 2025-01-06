@@ -1,11 +1,12 @@
 import Cookies from "./utilities/cookies.js";
+import Options from "./lib/options.js";
 
 let transactions = [];
 let income = 0;
 let expense = 0;
 const transactionList = document.getElementsByClassName("transaction-list")[0];
 
-transactions = JSON.parse(Cookies.getCookie("transactions"))
+transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
 
@@ -25,9 +26,10 @@ transactions.forEach((transaction) => {
   transactionList.appendChild(card);
 });
 
+console.log();
 document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
-  income + expense;
+  Options.currency + (income + expense);
 document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
-  income;
+  Options.currency + income;
 document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
-  Math.abs(expense);
+  Options.currency + Math.abs(expense);

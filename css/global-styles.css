@@ -93,6 +93,7 @@ nav {
 .main-content {
   opacity: 1;
   transition: opacity 0.1s ease-in-out;
+  overflow-y: auto;
   width: 100%;
   padding: 40px; }
   .main-content.fade-out {

@@ -1,5 +1,6 @@
 import uuidv4 from "./utilities/UUID.js";
 import Cookies from "./utilities/cookies.js";
+import Options from "./lib/options.js";
 
 let transactions = [];
 const transactionCards = document.getElementsByClassName("transaction-list")[0];
@@ -26,7 +27,7 @@ const createCard = (transaction) => {
   card.innerHTML = `
   <div class="card-header">
     <span class="amount">
-      ${transaction.type === "income" ? "+" : "-"}₱${Math.abs(
+      ${transaction.type === "income" ? "+" : "-"}${Options.currency}${Math.abs(
     transaction.amount
   )}
     </span>
@@ -48,7 +49,7 @@ const createCard = (transaction) => {
   return card;
 };
 
-transactions = JSON.parse(Cookies.getCookie("transactions"))
+transactions = Cookies.getCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
 
@@ -109,10 +110,13 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
   next.parentNode.insertBefore(card, next);
 };
 
-const incomeOptions =
-  "<option value='Salary'>Salary</option><option value='Allowance'>Allowance</option><option value='Other'>Other</option>";
-const expenseOptions =
-  "<option value='Food'>Food</option><option value='Transport'>Transport</option><option value='Apparel'>Apparel</option><option value='Education'>Education</option><option value='Other'>Other</option>";
+const incomeOptions = Options.incomeCategories.map(
+  (cat) => `<option value=${cat}>${cat}</option>`
+);
+
+const expenseOptions = Options.expenseCategories.map(
+  (cat) => `<option value=${cat}>${cat}</option>`
+);
 
 document.getElementsByName("transaction-type").forEach((radioButton) => {
   radioButton.addEventListener(
@@ -126,10 +130,10 @@ document.getElementsByName("transaction-type").forEach((radioButton) => {
 const timeFilter = (event) => {
   const choice = event.target.value;
   const dateObj = new Date();
+  dateObj.setHours(0, 0, 0, 0);
 
   switch (choice) {
     case "today":
-      dateObj.setHours(0, 0, 0, 0);
       break;
     case "this_week":
       const startOfWeek =
@@ -137,16 +141,15 @@ const timeFilter = (event) => {
           ? dateObj.getDate()
           : dateObj.getDate() - dateObj.getDay();
       dateObj.setDate(startOfWeek);
-      dateObj.setHours(0, 0, 0, 0);
       break;
     case "this_month":
       dateObj.setDate(1);
-      dateObj.setHours(0, 0, 0, 0);
       break;
-
     case "all_time":
       dateObj.setFullYear(1970);
       break;
+    default:
+      throw "Invalid date input!";
   }
 
   transactionCards.innerHTML = "";
