@@ -12,25 +12,35 @@
     <div class="flex-container">
       <nav include-html="nav.html"></nav>
       <div class="main-content">
-        <form class="transaction-form">
-          <h3>Add a budget</h2>
-      
-          <label for="amount">Amount</label>
-          <input id="amount" type="number" required />
+        <section class="left-section">
+          <form class="transaction-form">
+            <h3>Add a budget</h3>
 
-          <label for="category">Category</label>
-          <select id="category" name="category" required>
-            <option value='Food'>Food</option>
-            <option value='Transport'>Transport</option>
-            <option value='Apparel'>Apparel</option>
-            <option value='Education'>Education</option>
-            <option value='Other'>Other</option>
-          </select>
-          
-          <button class="submit-button" type="submit">Add</button>
-        </form>
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" required />
 
-        <div class="budgets">
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Apparel">Apparel</option>
+              <option value="Education">Education</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <button class="submit-button" type="submit">Add</button>
+          </form>
+
+          <div class="charts">
+            <h2>Spending Overview</h2>
+
+            <div class="pie-chart-container">
+              <canvas id="pieChart" class="pie-chart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <section class="budgets-section">
           <div class="header">
             <h1>Budget Tracker</h1>
           </div>
@@ -50,15 +60,8 @@
             </div>
           </div>
 
-          <div class="charts">
-            <h2>Spending Overview</h2>
-
-            <div class="pie-chart-container">
-              <canvas id="pieChart" class="pie-chart"></canvas>
-            </div>
-          </div>
-
           <div class="categories">
+            <h3>Budgets</h3>
             <div class="category">
               <label>
                 Food
@@ -89,7 +92,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
     <script src="../js/utilities/includeHTML.js"></script>
