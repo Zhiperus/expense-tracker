@@ -49,7 +49,7 @@ const createCard = (transaction) => {
   return card;
 };
 
-transactions = Cookies.getCookie("transactions")
+transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
 
