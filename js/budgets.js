@@ -17,17 +17,22 @@ const expensePerCat = transactions.reduce(
   ),
   {}
 );
+let totalBudget = 0;
+let totalSpent = 0;
 
 // Load chart
-const loadChart = () => {
+const loadChart = (labels) => {
   const ctx = document.getElementById("pieChart").getContext("2d");
   const pieChart = new Chart(ctx, {
     type: "doughnut", // Change the chart type to 'doughnut'
     data: {
-      labels: ["Food", "Transport", "Entertainment", "Others"],
+      labels: labels,
       datasets: [
         {
-          data: [338, 200, 300, 137], // Adjust values to match the image example
+          data: Object.keys(budgets).reduce(
+            (acc, curr) => [...acc, budgets[curr].budgetSpent],
+            []
+          ), // Adjust values to match the image example
           backgroundColor: ["#00A9CE", "#005F73", "#94D2BD", "#FFDDD2"], // Use colors similar to the image
           borderWidth: 2,
         },
@@ -38,7 +43,7 @@ const loadChart = () => {
       cutout: "70%", // Creates the inner hollow circle for a donut look
       plugins: {
         legend: {
-          display: false, // Hides legend to focus on the center label
+          display: true, // Hides legend to focus on the center label
         },
         tooltip: {
           enabled: true,
@@ -63,9 +68,13 @@ const loadChart = () => {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      ctx.fillText("$338", centerX, centerY - 10);
+      ctx.fillText(`${Options.currency}${totalSpent}`, centerX, centerY - 10);
       ctx.font = "15px Arial";
-      ctx.fillText("of $975 limit", centerX, centerY + 30);
+      ctx.fillText(
+        `of ${Options.currency}${totalBudget} limit`,
+        centerX,
+        centerY + 30
+      );
     },
   };
 
@@ -73,11 +82,8 @@ const loadChart = () => {
 };
 
 const loadOverview = () => {
-  let totalBudget = 0;
-  let totalSpent = 0;
-
   Object.keys(budgets).forEach((cat) => {
-    totalBudget += Number(budgets[cat].budgetAmount);
+    totalBudget += budgets[cat].budgetAmount;
     totalSpent += budgets[cat].budgetSpent;
   });
 
@@ -89,57 +95,107 @@ const loadOverview = () => {
     Options.currency + (totalBudget - totalSpent);
 };
 
+const delBudget = (cat) => {
+  const budgetCardsDiv = document.getElementsByClassName("categories")[0];
+
+  Array.from(budgetCardsDiv.children).forEach((catCard) => {
+    if (catCard.category === cat) {
+      budgetCardsDiv.removeChild(catCard);
+    }
+  });
+
+  delete budgets[cat];
+
+  Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+
+  setCategories();
+};
+
+const changeBugdetLimit = (cat) => {
+  const limitBox = document.getElementById("change-limit-box");
+
+  limitBox.getElementsByClassName("limit-category")[0].innerHTML = cat;
+  limitBox.getElementsByClassName("limit-form")[0].onsubmit = (e) => {
+    const form = e.target;
+    const newLimit = Number(form.limit.value);
+    budgets[cat].budgetAmount = newLimit;
+
+    Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+
+    limitBox.classList.remove("active");
+  };
+
+  limitBox.classList.add("active");
+};
+
 // Card creation
 const createCard = (budget) => {
+  const expenseInCat =
+    budget.category in expensePerCat ? expensePerCat[budget.category] : 0;
+
   let card = document.createElement("div");
   card.classList.add(`category`);
+  card.category = budget.category;
   card.innerHTML = `
       <label>
-        Transport
-          <span>${Options.currency}${expensePerCat[budget.category]} / ${
-    Options.currency
-  }${budget.budgetAmount}</span>
+        ${budget.category}
+          <span>${Options.currency}${expenseInCat} / ${Options.currency}${
+    budget.budgetAmount
+  }</span>
       </label>
-      <div class="progress-bar">
+      <div class="progress-bar"> 
         <span style="width: ${
-          (expensePerCat[budget.category] / budget.budgetAmount) * 100
+          (expenseInCat / budget.budgetAmount) * 100
         }%"></span>
+      </div>  
+      <div class="action-buttons">
+        <button class="limit-button">Change Limit</button>
+        <button class="del-button"><i class="fa-solid fa-trash fa-xl"></i></button>
       </div>
   `;
+
+  card
+    .getElementsByClassName("del-button")[0]
+    .addEventListener("click", () => delBudget(budget.category));
+
+  card
+    .getElementsByClassName("limit-button")[0]
+    .addEventListener("click", () => changeBugdetLimit(budget.category));
 
   return card;
 };
 
 // Set categories
 const setCategories = () => {
-  let expenseOptions = Options.expenseCategories.map((cat) =>
+  const expenseOptions = Options.expenseCategories.map((cat) =>
     cat in budgets ? "" : `<option value=${cat}>${cat}</option>`
   );
 
   document.getElementById("category").innerHTML = expenseOptions;
 };
 
-// Initial render
+/****  Initial render ****/
+
+// Render cards from the budgets taken from cookies
 Object.keys(budgets).forEach((cat) =>
   document
     .getElementsByClassName("categories")[0]
     .appendChild(createCard(budgets[cat]))
 );
-
 loadOverview();
-loadChart();
+loadChart(Object.keys(budgets));
 setCategories();
 
 // On form submit
 document.getElementsByTagName("form")[0].onsubmit = (e) => {
   e.preventDefault();
   const form = e.target;
-  const budgetAmount = form.amount.value;
+  const budgetAmount = Number(form.amount.value);
   const category = form.category.value;
 
   const budget = {
     budgetAmount,
-    budgetSpent: expensePerCat[category],
+    budgetSpent: category in expensePerCat ? expensePerCat[category] : 0,
     category,
   };
   budgets[category] = budget;
@@ -150,5 +206,7 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
 
   document.getElementsByClassName("categories")[0].appendChild(card);
 
+  loadOverview();
+  loadChart(Object.keys(budgets));
   setCategories();
 };

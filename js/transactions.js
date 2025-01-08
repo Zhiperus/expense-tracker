@@ -2,8 +2,16 @@ import uuidv4 from "./utilities/UUID.js";
 import Cookies from "./utilities/cookies.js";
 import Options from "./lib/options.js";
 
-let transactions = [];
+let transactions = Cookies.checkCookie("transactions")
+  ? JSON.parse(Cookies.getCookie("transactions"))
+  : [];
 const transactionCards = document.getElementsByClassName("transaction-list")[0];
+const incomeOptions = Options.incomeCategories.map(
+  (cat) => `<option value=${cat}>${cat}</option>`
+);
+const expenseOptions = Options.expenseCategories.map(
+  (cat) => `<option value=${cat}>${cat}</option>`
+);
 
 const delTransaction = (Id) => {
   const arrayIndex = transactions
@@ -49,14 +57,52 @@ const createCard = (transaction) => {
   return card;
 };
 
-transactions = Cookies.checkCookie("transactions")
-  ? JSON.parse(Cookies.getCookie("transactions"))
-  : [];
+const timeFilter = (event) => {
+  const choice = event.target.value;
+  const dateObj = new Date();
+  dateObj.setHours(0, 0, 0, 0);
 
+  switch (choice) {
+    case "today":
+      break;
+    case "this_week":
+      const startOfWeek =
+        dateObj.getDate() - dateObj.getDay() < 0
+          ? dateObj.getDate()
+          : dateObj.getDate() - dateObj.getDay();
+      dateObj.setDate(startOfWeek);
+      break;
+    case "this_month":
+      dateObj.setDate(1);
+      break;
+    case "all_time":
+      dateObj.setFullYear(1970);
+      break;
+    default:
+      throw "Invalid date input!";
+  }
+
+  transactionCards.innerHTML = "";
+  transactions
+    .filter(
+      (transaction) => Date.parse(transaction.dateObj) > Date.parse(dateObj)
+    )
+    .forEach((transaction) =>
+      transactionCards.appendChild(createCard(transaction))
+    );
+};
+
+/****  Initial render ****/
+
+// Render cards from the budgets taken from cookies
 for (let i = 0; i < transactions.length; i++) {
   transactionCards.appendChild(createCard(transactions[i]));
 }
 
+// Set initial options
+document.getElementById("category").innerHTML = incomeOptions;
+
+// Event listeners
 document.getElementsByTagName("form")[0].onsubmit = (e) => {
   e.preventDefault();
   const form = e.target;
@@ -110,14 +156,6 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
   next.parentNode.insertBefore(card, next);
 };
 
-const incomeOptions = Options.incomeCategories.map(
-  (cat) => `<option value=${cat}>${cat}</option>`
-);
-
-const expenseOptions = Options.expenseCategories.map(
-  (cat) => `<option value=${cat}>${cat}</option>`
-);
-
 document.getElementsByName("transaction-type").forEach((radioButton) => {
   radioButton.addEventListener(
     "click",
@@ -126,40 +164,5 @@ document.getElementsByName("transaction-type").forEach((radioButton) => {
         radioButton.id === "income" ? incomeOptions : expenseOptions)
   );
 });
-
-const timeFilter = (event) => {
-  const choice = event.target.value;
-  const dateObj = new Date();
-  dateObj.setHours(0, 0, 0, 0);
-
-  switch (choice) {
-    case "today":
-      break;
-    case "this_week":
-      const startOfWeek =
-        dateObj.getDate() - dateObj.getDay() < 0
-          ? dateObj.getDate()
-          : dateObj.getDate() - dateObj.getDay();
-      dateObj.setDate(startOfWeek);
-      break;
-    case "this_month":
-      dateObj.setDate(1);
-      break;
-    case "all_time":
-      dateObj.setFullYear(1970);
-      break;
-    default:
-      throw "Invalid date input!";
-  }
-
-  transactionCards.innerHTML = "";
-  transactions
-    .filter(
-      (transaction) => Date.parse(transaction.dateObj) > Date.parse(dateObj)
-    )
-    .forEach((transaction) =>
-      transactionCards.appendChild(createCard(transaction))
-    );
-};
 
 document.getElementById("select-time").addEventListener("change", timeFilter);

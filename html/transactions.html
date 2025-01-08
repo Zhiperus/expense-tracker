@@ -45,13 +45,11 @@
           <input id="time" type="time" required />
 
           <label for="amount">Amount</label>
-          <input id="amount" type="number" required />
+          <input id="amount" type="number" required min="0" />
 
           <label for="category">Category</label>
           <select id="category" name="category" required>
-            <option value="Salary">Salary</option>
-            <option value="Allowance">Allowance</option>
-            <option value="Other">Other</option>
+            <!-- Dynamically loaded -->
           </select>
 
           <label for="account">Account</label>
