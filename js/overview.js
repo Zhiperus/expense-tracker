@@ -1,14 +1,16 @@
 import Cookies from "./utilities/cookies.js";
 import Options from "./lib/options.js";
+import { loadChart } from "./budgets.js";
 
-let transactions = [];
-let income = 0;
-let expense = 0;
-const transactionList = document.getElementsByClassName("transaction-list")[0];
-
-transactions = Cookies.checkCookie("transactions")
+let transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
+let budgets = Cookies.checkCookie("budgets")
+  ? JSON.parse(Cookies.getCookie("budgets"))
+  : {};
+const transactionList = document.getElementsByClassName("transaction-list")[0];
+let income = 0;
+let expense = 0;
 
 transactions.forEach((transaction) => {
   transaction.type === "income"
@@ -26,10 +28,11 @@ transactions.forEach((transaction) => {
   transactionList.appendChild(card);
 });
 
-console.log();
 document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
   Options.currency + (income + expense);
 document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
   Options.currency + income;
 document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
   Options.currency + Math.abs(expense);
+
+loadChart(Object.keys(budgets));

@@ -5,6 +5,10 @@ const setCookie = (cname, cvalue, exdays) => {
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 };
 
+const deleteCookie = (cname) => {
+  document.cookie = cname + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+};
+
 const getCookie = (cname) => {
   let name = cname + "=";
   let ca = document.cookie.split(";");
@@ -29,4 +33,4 @@ const checkCookie = (cname) => {
   }
 };
 
-export default { setCookie, getCookie, checkCookie };
+export default { setCookie, deleteCookie, getCookie, checkCookie };

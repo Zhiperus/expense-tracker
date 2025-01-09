@@ -5,6 +5,7 @@ import Options from "./lib/options.js";
 let transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
   : [];
+
 const transactionCards = document.getElementsByClassName("transaction-list")[0];
 const incomeOptions = Options.incomeCategories.map(
   (cat) => `<option value=${cat}>${cat}</option>`
@@ -20,6 +21,20 @@ const delTransaction = (Id) => {
   const nodeIndex = Array.from(transactionCards.children)
     .map((transaction) => transaction.uid)
     .indexOf(Id);
+  const transaction = transactions[arrayIndex];
+
+  if (
+    transaction.type === "expense" &&
+    Cookies.checkCookie("budgets") &&
+    transaction.category in JSON.parse(Cookies.getCookie("budgets")).budgetList
+  ) {
+    const budgets = JSON.parse(Cookies.getCookie("budgets"));
+    budgets.budgetList[transaction.category].budgetSpent -= Math.abs(
+      transaction.amount
+    );
+    budgets.totalSpent -= Math.abs(transaction.amount);
+    Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+  }
 
   transactions.splice(arrayIndex, 1);
 
@@ -128,6 +143,7 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
 
   let card = createCard(transaction);
 
+  // Insertion sort
   let i = 0;
   if (transactions.length === 0) {
     transactions.push(transaction);
@@ -148,6 +164,19 @@ document.getElementsByTagName("form")[0].onsubmit = (e) => {
         break;
       }
     }
+  }
+
+  if (
+    transaction.type === "expense" &&
+    Cookies.checkCookie("budgets") &&
+    transaction.category in JSON.parse(Cookies.getCookie("budgets")).budgetList
+  ) {
+    const budgets = JSON.parse(Cookies.getCookie("budgets"));
+    budgets.budgetList[transaction.category].budgetSpent += Math.abs(
+      transaction.amount
+    );
+    budgets.totalSpent += Math.abs(transaction.amount);
+    Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
   }
 
   Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
