@@ -14,19 +14,23 @@ $font-size-large: 1.4rem;
 
 .main-content {
   display: flex;
-  gap: 160px;
+  gap: 130px;
 }
 
-form {
-  position: sticky;
-  top: 20px; /* Keeps form 20px from the top while scrolling */
+.left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.budget-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, 2em);
   column-gap: 50px;
   row-gap: 10px;
   align-items: center;
-  width: 300px;
+  width: 20rem;
   height: fit-content;
   padding: 20px;
   background-color: $background-light;
@@ -82,10 +86,40 @@ form {
   }
 }
 
-.budgets {
+.charts {
+  margin-top: 20px;
+  text-align: center;
+  padding: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 0.8s;
+  background-color: white;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px $shadow-light;
+}
+
+.charts img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.pie-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20rem;
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 1.2s;
+}
+
+.budgets-section {
   flex: 3;
-  max-width: 800px;
-  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 95%;
   padding: 20px;
   background: white;
   border-radius: 8px;
@@ -116,79 +150,159 @@ form {
   border-radius: 6px;
   opacity: 0;
   animation: fadeInUp 1s forwards 0.4s;
+
+  & div {
+    text-align: center;
+  }
+
+  & div h2 {
+    margin: 5px 0;
+    font-size: 1.2em;
+    color: #2d6a4f;
+  }
 }
 
-.overview div {
-  text-align: center;
+#change-limit-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: #f5f5f5;
+  width: 15rem;
+  height: auto;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.overview div h2 {
-  margin: 5px 0;
-  font-size: 1.2em;
-  color: #2d6a4f;
+#change-limit-box.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.limit-category {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.limit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.limit-form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.limit-form button {
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.limit-form button:hover {
+  background-color: #45a049;
+}
+
+.cancel-btn {
+  margin-top: 1rem;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f44336;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
 }
 
 .categories {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
   opacity: 0;
   animation: fadeInUp 1s forwards 0.6s;
-}
+  overflow-y: auto;
 
-.category {
-  margin-bottom: 10px;
-}
+  > h3 {
+    text-align: center;
+  }
 
-.category label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  margin-bottom: 4px;
-}
+  > .category {
+    margin-bottom: 10px;
+    padding: 0.7rem;
+    background-color: var(--background-color);
 
-.progress-bar {
-  position: relative;
-  height: 10px;
-  background: #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-}
+    > label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9em;
+      margin-bottom: 4px;
+    }
 
-.progress-bar span {
-  display: block;
-  height: 100%;
-  background: #2d6a4f;
-  width: 0;
-  animation: growBar 1s forwards;
-}
+    > .progress-bar {
+      position: relative;
+      margin-top: 20px;
+      height: 10px;
+      background: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
 
-.charts {
-  margin-top: 20px;
-  text-align: center;
-  opacity: 0;
-  animation: fadeInUp 1s forwards 0.8s;
-}
+      > span {
+        display: block;
+        height: 100%;
+        background: #2d6a4f;
+        width: 0px;
+        animation: growBar 1s forwards;
+      }
+    }
 
-.charts img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
+    > .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 15px;
 
-.actions {
-  margin-top: 20px;
-  text-align: center;
-  opacity: 0;
-  animation: fadeInUp 1s forwards 1s;
-}
+      > * {
+        cursor: pointer;
+        border: 0;
+      }
 
-.pie-chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 500px;
-  margin-top: 20px;
-  opacity: 0;
-  animation: fadeInUp 1s forwards 1.2s;
+      > .del-button {
+        margin-left: 20px;
+        background-color: transparent;
+      }
+
+      > .limit-button {
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.253);
+      }
+    }
+  }
 }
 
 @keyframes fadeIn {
@@ -214,8 +328,5 @@ form {
 @keyframes growBar {
   from {
     width: 0;
-  }
-  to {
-    width: 100%;
   }
 }

@@ -2,21 +2,69 @@ import uuidv4 from "./utilities/UUID.js";
 import Cookies from "./utilities/cookies.js";
 import Options from "./lib/options.js";
 
-let transactions = [];
+/*** Variables Initialization ***/
+let transactions = { totalIncome: 0, totalExpense: 0, transactionList: [] };
+transactions = Cookies.checkCookie("transactions")
+  ? JSON.parse(Cookies.getCookie("transactions"))
+  : transactions;
+let transactionList = transactions.transactionList;
+
 const transactionCards = document.getElementsByClassName("transaction-list")[0];
+const incomeOptions = Options.incomeCategories.map(
+  (cat) => `<option value=${cat}>${cat}</option>`
+);
+const expenseOptions = Options.expenseCategories.map(
+  (cat) => `<option value=${cat}>${cat}</option>`
+);
+
+/*** Utility Functions ***/
+
+const updateBudgetsOnDelete = (transaction) => {
+  if (
+    transaction.type === "expense" &&
+    Cookies.checkCookie("budgets") &&
+    transaction.category in JSON.parse(Cookies.getCookie("budgets")).budgetList
+  ) {
+    const budgets = JSON.parse(Cookies.getCookie("budgets"));
+    budgets.budgetList[transaction.category].budgetSpent -= Math.abs(
+      transaction.amount
+    );
+    budgets.totalSpent -= Math.abs(transaction.amount);
+    Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+  }
+};
+
+const updateBudgetsOnAdd = (transaction) => {
+  if (
+    transaction.type === "expense" &&
+    Cookies.checkCookie("budgets") &&
+    transaction.category in JSON.parse(Cookies.getCookie("budgets")).budgetList
+  ) {
+    const budgets = JSON.parse(Cookies.getCookie("budgets"));
+    budgets.budgetList[transaction.category].budgetSpent += Math.abs(
+      transaction.amount
+    );
+    budgets.totalSpent += Math.abs(transaction.amount);
+    Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+  }
+};
 
 const delTransaction = (Id) => {
-  const arrayIndex = transactions
+  const arrayIndex = transactionList
     .map((transaction) => transaction.Id)
     .indexOf(Id);
   const nodeIndex = Array.from(transactionCards.children)
     .map((transaction) => transaction.uid)
     .indexOf(Id);
+  const transaction = transactionList[arrayIndex];
 
-  transactions.splice(arrayIndex, 1);
+  transaction.type === "income"
+    ? (transactions.totalIncome -= transaction.amount)
+    : (transactions.totalExpense -= transaction.amount);
+  updateBudgetsOnDelete(transaction);
 
+  transactionList.splice(arrayIndex, 1);
   Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
-
   transactionCards.removeChild(transactionCards.children[nodeIndex]);
 };
 
@@ -25,21 +73,21 @@ const createCard = (transaction) => {
   card.classList.add(`${transaction.type}-card`);
   card.uid = transaction.Id;
   card.innerHTML = `
-  <div class="card-header">
-    <span class="amount">
-      ${transaction.type === "income" ? "+" : "-"}${Options.currency}${Math.abs(
-    transaction.amount
-  )}
-    </span>
-    <span class="time-date">
-      ${transaction.date} | ${transaction.time}
-    </span>
-  </div>
-  <div class="card-details">
-    <p><strong>Category:</strong> ${transaction.category}</p>
-    <p><strong>Note:</strong> ${transaction.note}</p>
-    <button class="del-button"><i class="fa-solid fa-trash fa-xl"></i></button>
-  </div>
+    <div class="card-header">
+      <span class="amount">
+        ${transaction.type === "income" ? "+" : "-"}${
+    Options.currency
+  }${Math.abs(transaction.amount)}
+      </span>
+      <span class="time-date">
+        ${transaction.date} | ${transaction.time}
+      </span>
+    </div>
+    <div class="card-details">
+      <p><strong>Category:</strong> ${transaction.category}</p>
+      <p><strong>Note:</strong> ${transaction.note}</p>
+      <button class="del-button"><i class="fa-solid fa-trash fa-xl"></i></button>
+    </div>
   `;
 
   card
@@ -48,84 +96,6 @@ const createCard = (transaction) => {
 
   return card;
 };
-
-transactions = Cookies.getCookie("transactions")
-  ? JSON.parse(Cookies.getCookie("transactions"))
-  : [];
-
-for (let i = 0; i < transactions.length; i++) {
-  transactionCards.appendChild(createCard(transactions[i]));
-}
-
-document.getElementsByTagName("form")[0].onsubmit = (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const [h, m] = form.time.value.split(":");
-  const [year, month, day] = form.date.value.split("-");
-  const dateObj = new Date(year, month - 1, day, h, m);
-  const [dayStr, monthStr, dayOfMonth, yearStr] = dateObj
-    .toDateString()
-    .split(" ");
-
-  const transaction = {
-    Id: uuidv4(),
-    type: form.income.checked === true ? "income" : "expense",
-    dateObj,
-    date: `${monthStr} ${dayOfMonth}, ${yearStr}`,
-    time: `${h % 12 ? h % 12 : 12}:${m} ${h >= 12 ? "PM" : "AM"}`,
-    amount:
-      form.income.checked === true ? +form.amount.value : -form.amount.value,
-    category: form.category.value,
-    account: form.account.value,
-    note: form.note.value,
-  };
-
-  let card = createCard(transaction);
-
-  let i = 0;
-  if (transactions.length === 0) {
-    transactions.push(transaction);
-
-    document.getElementsByClassName("transaction-list")[0].appendChild(card);
-  } else {
-    for (; i < transactions.length; i++) {
-      if (
-        Date.parse(transactions[i].dateObj) <=
-          Date.parse(transaction.dateObj) ||
-        i === transactions.length - 1
-      ) {
-        transactions = [
-          ...transactions.slice(0, i),
-          transaction,
-          ...transactions.slice(i),
-        ];
-        break;
-      }
-    }
-  }
-
-  Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
-
-  let next = document.getElementsByClassName("transaction-list")[0].children[i];
-  next.parentNode.insertBefore(card, next);
-};
-
-const incomeOptions = Options.incomeCategories.map(
-  (cat) => `<option value=${cat}>${cat}</option>`
-);
-
-const expenseOptions = Options.expenseCategories.map(
-  (cat) => `<option value=${cat}>${cat}</option>`
-);
-
-document.getElementsByName("transaction-type").forEach((radioButton) => {
-  radioButton.addEventListener(
-    "click",
-    () =>
-      (document.getElementById("category").innerHTML =
-        radioButton.id === "income" ? incomeOptions : expenseOptions)
-  );
-});
 
 const timeFilter = (event) => {
   const choice = event.target.value;
@@ -149,11 +119,11 @@ const timeFilter = (event) => {
       dateObj.setFullYear(1970);
       break;
     default:
-      throw "Invalid date input!";
+      throw new Error("Invalid date input!");
   }
 
   transactionCards.innerHTML = "";
-  transactions
+  transactionList
     .filter(
       (transaction) => Date.parse(transaction.dateObj) > Date.parse(dateObj)
     )
@@ -162,4 +132,101 @@ const timeFilter = (event) => {
     );
 };
 
-document.getElementById("select-time").addEventListener("change", timeFilter);
+/*** Initial Rendering ***/
+
+const renderInitialCards = () => {
+  transactionList.forEach((transaction) => {
+    transactionCards.appendChild(createCard(transaction));
+  });
+};
+
+const setInitialOptions = () => {
+  document.getElementById("category").innerHTML = incomeOptions;
+};
+
+/*** Event Listeners ***/
+
+const setupFormSubmission = () => {
+  document.getElementsByTagName("form")[0].onsubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const [h, m] = form.time.value.split(":"),
+      [year, month, day] = form.date.value.split("-");
+    const dateObj = new Date(year, month - 1, day, h, m);
+    const [dayStr, monthStr, dayOfMonth, yearStr] = dateObj
+      .toDateString()
+      .split(" ");
+
+    const transaction = {
+      Id: uuidv4(),
+      type: form.income.checked ? "income" : "expense",
+      dateObj,
+      date: `${monthStr} ${dayOfMonth}, ${yearStr}`,
+      time: `${h % 12 ? h % 12 : 12}:${m} ${h >= 12 ? "PM" : "AM"}`,
+      amount: form.income.checked ? +form.amount.value : -form.amount.value,
+      category: form.category.value,
+      account: form.account.value,
+      note: form.note.value,
+    };
+
+    transaction.type === "income"
+      ? (transactions.totalIncome += transaction.amount)
+      : (transactions.totalExpense += transaction.amount);
+
+    let card = createCard(transaction);
+    let i = 0;
+
+    if (transactionList.length === 0) {
+      transactionList.push(transaction);
+      transactionCards.appendChild(card);
+    } else {
+      for (; i < transactionList.length; i++) {
+        if (
+          Date.parse(transactionList[i].dateObj) <=
+            Date.parse(transaction.dateObj) ||
+          i === transactionList.length - 1
+        ) {
+          transactions.transactionList = [
+            ...transactionList.slice(0, i),
+            transaction,
+            ...transactionList.slice(i),
+          ];
+          break;
+        }
+      }
+    }
+
+    updateBudgetsOnAdd(transaction);
+    Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
+
+    let next = transactionCards.children[i];
+    next.parentNode.insertBefore(card, next);
+  };
+};
+
+const setupRadioButtons = () => {
+  document.getElementsByName("transaction-type").forEach((radioButton) => {
+    radioButton.addEventListener(
+      "click",
+      () =>
+        (document.getElementById("category").innerHTML =
+          radioButton.id === "income" ? incomeOptions : expenseOptions)
+    );
+  });
+};
+
+const setupTimeFilter = () => {
+  document.getElementById("select-time").addEventListener("change", timeFilter);
+};
+
+/*** Main Initialization ***/
+
+const init = () => {
+  renderInitialCards();
+  setInitialOptions();
+  setupFormSubmission();
+  setupRadioButtons();
+  setupTimeFilter();
+};
+
+init();
