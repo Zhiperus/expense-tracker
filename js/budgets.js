@@ -10,12 +10,12 @@ budgets = Cookies.checkCookie("budgets")
   : budgets;
 let budgetList = budgets.budgetList;
 
-let transactions = Cookies.checkCookie("transactions")
-  ? JSON.parse(Cookies.getCookie("transactions"))
+let transactionList = Cookies.checkCookie("transactions")
+  ? JSON.parse(Cookies.getCookie("transactions")).transactionList
   : [];
 
 // Calculate expense per category
-const expensePerCat = transactions.reduce((acc, curr) => {
+const expensePerCat = transactionList.reduce((acc, curr) => {
   if (curr.type === "expense") {
     acc[curr.category] = (acc[curr.category] || 0) + Math.abs(curr.amount);
   }
