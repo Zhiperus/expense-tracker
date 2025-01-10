@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 30px; }
+  gap: 30px;
+  overflow-y: auto; }
   .overview h2 {
     height: fit-content;
     margin: 0; }
@@ -51,40 +52,43 @@
         .financial-overview > .left-section > .card > header > h3,
         .financial-overview .right-section > .card > header > h3 {
           margin-top: 0; }
-    .financial-overview > .left-section.left-section,
-    .financial-overview .right-section.left-section {
-      flex: 1.3; }
-    .financial-overview > .left-section.right-section,
-    .financial-overview .right-section.right-section {
-      flex: 1; }
-  .financial-overview #pots-card {
-    flex: 2; }
-  .financial-overview #transactions-card {
-    flex: 5; }
-    .financial-overview #transactions-card .transaction-list {
-      display: flex;
-      padding: 1px;
-      flex-direction: column;
-      overflow-y: auto;
-      gap: 2px;
-      width: 100%;
-      height: 320px;
-      background-color: var(--background-color); }
-      .financial-overview #transactions-card .transaction-list > div {
+  .financial-overview > .left-section {
+    flex: 1.3; }
+    .financial-overview > .left-section > #pots-card {
+      flex: 2; }
+    .financial-overview > .left-section > #transactions-card {
+      flex: 5; }
+      .financial-overview > .left-section > #transactions-card .transaction-list {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-shrink: 0;
-        background-color: aliceblue;
-        height: 75px; }
-        .financial-overview #transactions-card .transaction-list > div > div {
+        padding: 1px;
+        flex-direction: column;
+        overflow-y: auto;
+        gap: 2px;
+        width: 100%;
+        height: 320px;
+        background-color: var(--background-color); }
+        .financial-overview > .left-section > #transactions-card .transaction-list > div {
           display: flex;
-          flex-direction: column;
-          align-items: center; }
-  .financial-overview #budgets-card {
-    flex: 1.75; }
-  .financial-overview #bills-card {
-    flex: 1.5; }
+          justify-content: space-between;
+          align-items: center;
+          flex-shrink: 0;
+          background-color: aliceblue;
+          height: 75px; }
+          .financial-overview > .left-section > #transactions-card .transaction-list > div > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center; }
+  .financial-overview > .right-section {
+    flex: 1; }
+    .financial-overview > .right-section > #budgets-card {
+      flex: 1; }
+      .financial-overview > .right-section > #budgets-card .charts {
+        display: flex;
+        justify-content: center; }
+      .financial-overview > .right-section > #budgets-card .pie-chart-container {
+        height: 15rem; }
+    .financial-overview > .right-section > #bills-card {
+      flex: 2; }
 
 .transaction {
   display: flex;

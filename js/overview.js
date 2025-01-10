@@ -1,6 +1,6 @@
 import Cookies from "./utilities/cookies.js";
 import Options from "./lib/options.js";
-import { loadChart } from "./budgets.js";
+import { loadChart } from "./utilities/loadChart.js";
 
 let transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
@@ -35,4 +35,14 @@ document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
 document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
   Options.currency + Math.abs(expense);
 
-loadChart(Object.keys(budgets));
+loadChart(
+  {
+    labels: Object.keys(budgets.budgetList),
+    data: Object.keys(budgets.budgetList).map(
+      (cat) => budgets.budgetList[cat].budgetSpent
+    ),
+    total: budgets.totalSpent,
+    limit: budgets.totalBudget,
+  },
+  Options
+);
