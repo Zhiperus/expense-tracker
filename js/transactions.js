@@ -64,7 +64,13 @@ const delTransaction = (Id) => {
   updateBudgetsOnDelete(transaction);
 
   transactionList.splice(arrayIndex, 1);
-  Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
+
+  if (transactionList.length === 0) {
+    Cookies.deleteCookie("transactions");
+  } else {
+    Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
+  }
+
   transactionCards.removeChild(transactionCards.children[nodeIndex]);
 };
 

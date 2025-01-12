@@ -4,10 +4,18 @@ import { loadChart } from "./utilities/loadChart.js";
 
 let transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
-  : [];
+  : {
+      transactionList: [],
+      totalIncome: 0,
+      totalExpense: 0,
+    };
 let budgets = Cookies.checkCookie("budgets")
   ? JSON.parse(Cookies.getCookie("budgets"))
-  : {};
+  : {
+      budgetList: {},
+      totalSpent: 0,
+      totalBudget: 0,
+    };
 const transactionList = document.getElementsByClassName("transaction-list")[0];
 
 // Financial Overview
@@ -30,15 +38,16 @@ document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
 document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
   Options.currency + Math.abs(transactions.totalExpense);
 
-// Budgets
-loadChart(
-  {
-    labels: Object.keys(budgets.budgetList),
-    data: Object.keys(budgets.budgetList).map(
-      (cat) => budgets.budgetList[cat].budgetSpent
-    ),
-    total: budgets.totalSpent,
-    limit: budgets.totalBudget,
-  },
-  Options
-);
+if (budgets.totalBudget !== 0)
+  // Budgets
+  loadChart(
+    {
+      labels: Object.keys(budgets.budgetList),
+      data: Object.keys(budgets.budgetList).map(
+        (cat) => budgets.budgetList[cat].budgetSpent
+      ),
+      total: budgets.totalSpent,
+      limit: budgets.totalBudget,
+    },
+    Options
+  );

@@ -9,7 +9,6 @@ budgets = Cookies.checkCookie("budgets")
   ? JSON.parse(Cookies.getCookie("budgets"))
   : budgets;
 let budgetList = budgets.budgetList;
-
 let transactionList = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions")).transactionList
   : [];
@@ -183,15 +182,16 @@ const createCard = (budget) => {
  */
 const renderElements = () => {
   loadOverview();
-  loadChart(
-    {
-      labels: Object.keys(budgetList),
-      data: Object.keys(budgetList).map((cat) => budgetList[cat].budgetSpent),
-      total: budgets.totalSpent,
-      limit: budgets.totalBudget,
-    },
-    Options
-  );
+  if (budgets.totalBudget !== 0)
+    loadChart(
+      {
+        labels: Object.keys(budgetList),
+        data: Object.keys(budgetList).map((cat) => budgetList[cat].budgetSpent),
+        total: budgets.totalSpent,
+        limit: budgets.totalBudget,
+      },
+      Options
+    );
   setCategories();
 };
 

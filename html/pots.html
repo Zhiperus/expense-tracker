@@ -5,12 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pots</title>
     <link href="../css/global-styles.css" rel="stylesheet" />
+    <link href="../css/pots-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="flex-container">
       <nav include-html="nav.html"></nav>
-      <div class="main-content"><div include-html="maint.html"></div></div>
+      <div class="main-content">
+        <form class="budget-form">
+          <h3>Add a pot</h3>
+
+          <label for="name">Name</label>
+          <input id="name" type="text" required />
+
+          <label for="category">Goal</label>
+          <input id="amount" type="number" required min="0" />
+
+          <button class="submit-button" type="submit">Add</button>
+        </form>
+        <section class="pots-section">
+          <h1>Your Pots</h1>
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i
+            ><input type="text" placeholder="Search..." />
+          </div>
+          <div class="pots-list"></div>
+        </section>
+      </div>
     </div>
+    <script
+      src="https://kit.fontawesome.com/1db965118e.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../js/utilities/includeHTML.js"></script>
   </body>
 </html>

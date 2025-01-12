@@ -48,7 +48,7 @@
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: var(--navbar-color);
     color: white;
     border: none;
     border-radius: 4px;
