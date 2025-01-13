@@ -8,8 +8,8 @@ let budgets = { totalBudget: 0, totalSpent: 0, budgetList: {} };
 budgets = Cookies.checkCookie("budgets")
   ? JSON.parse(Cookies.getCookie("budgets"))
   : budgets;
-let budgetList = budgets.budgetList;
-let transactionList = Cookies.checkCookie("transactions")
+const budgetList = budgets.budgetList;
+const transactionList = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions")).transactionList
   : [];
 
