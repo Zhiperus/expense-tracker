@@ -7,7 +7,7 @@ let transactions = { totalIncome: 0, totalExpense: 0, transactionList: [] };
 transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
   : transactions;
-let transactionList = transactions.transactionList;
+const transactionList = transactions.transactionList;
 
 const transactionCards = document.getElementsByClassName("transaction-list")[0];
 const incomeOptions = Options.incomeCategories.map(
@@ -18,7 +18,6 @@ const expenseOptions = Options.expenseCategories.map(
 );
 
 /*** Utility Functions ***/
-
 const updateBudgetsOnDelete = (transaction) => {
   if (
     transaction.type === "expense" &&
@@ -64,7 +63,13 @@ const delTransaction = (Id) => {
   updateBudgetsOnDelete(transaction);
 
   transactionList.splice(arrayIndex, 1);
-  Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
+
+  if (transactionList.length === 0) {
+    Cookies.deleteCookie("transactions");
+  } else {
+    Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
+  }
+
   transactionCards.removeChild(transactionCards.children[nodeIndex]);
 };
 
@@ -132,8 +137,6 @@ const timeFilter = (event) => {
     );
 };
 
-/*** Initial Rendering ***/
-
 const renderInitialCards = () => {
   transactionList.forEach((transaction) => {
     transactionCards.appendChild(createCard(transaction));
@@ -145,7 +148,6 @@ const setInitialOptions = () => {
 };
 
 /*** Event Listeners ***/
-
 const setupFormSubmission = () => {
   document.getElementsByTagName("form")[0].onsubmit = (e) => {
     e.preventDefault();
@@ -218,8 +220,6 @@ const setupRadioButtons = () => {
 const setupTimeFilter = () => {
   document.getElementById("select-time").addEventListener("change", timeFilter);
 };
-
-/*** Main Initialization ***/
 
 const init = () => {
   renderInitialCards();

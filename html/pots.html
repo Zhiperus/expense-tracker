@@ -4,13 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pots</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
     <link href="../css/global-styles.css" rel="stylesheet" />
+    <link href="../css/pots-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="flex-container">
       <nav include-html="nav.html"></nav>
-      <div class="main-content"><div include-html="maint.html"></div></div>
+      <div class="main-content">
+        <form class="pots-form">
+          <h3>Add a pot</h3>
+
+          <label for="name">Name</label>
+          <input name="name" id="name" type="text" required />
+
+          <label for="goal">Goal</label>
+          <input name="goal" id="goal" type="number" required min="0" />
+
+          <button class="submit-button" type="submit">Add</button>
+        </form>
+        <section class="pots-section">
+          <h1>Your Pots</h1>
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i
+            ><input id="search-field" type="text" placeholder="Search..." />
+          </div>
+          <div class="pot-list"></div>
+          <div id="change-limit-box">
+            <h3 class="limit-pot">Change Limit</h3>
+            <form class="limit-form">
+              <input
+                name="limit"
+                type="number"
+                placeholder="Enter limit"
+                min="0"
+              />
+              <button type="submit">Save</button>
+            </form>
+            <button
+              class="cancel-btn"
+              onclick="document.getElementById('change-limit-box').classList.remove('active')"
+            >
+              Cancel
+            </button>
+          </div>
+        </section>
+      </div>
     </div>
+    <script
+      src="https://kit.fontawesome.com/1db965118e.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="../js/utilities/includeHTML.js"></script>
+    <script src="../js/pots.js" type="module"></script>
   </body>
 </html>

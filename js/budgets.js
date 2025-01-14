@@ -8,9 +8,8 @@ let budgets = { totalBudget: 0, totalSpent: 0, budgetList: {} };
 budgets = Cookies.checkCookie("budgets")
   ? JSON.parse(Cookies.getCookie("budgets"))
   : budgets;
-let budgetList = budgets.budgetList;
-
-let transactionList = Cookies.checkCookie("transactions")
+const budgetList = budgets.budgetList;
+const transactionList = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions")).transactionList
   : [];
 
@@ -50,7 +49,7 @@ const setCategories = () => {
  * @param {string} cat - The category to update.
  */
 const changeBudgetLimit = (cat) => {
-  const budgetCardsDiv = document.getElementsByClassName("categories")[0];
+  const budgetCardsDiv = document.getElementsByClassName("budget-list")[0];
   const limitBox = document.getElementById("change-limit-box");
   const expenseInCat = cat in expensePerCat ? expensePerCat[cat] : 0;
 
@@ -91,7 +90,7 @@ const changeBudgetLimit = (cat) => {
  * @param {string} cat - The category to delete.
  */
 const delBudget = (cat) => {
-  const budgetCardsDiv = document.getElementsByClassName("categories")[0];
+  const budgetCardsDiv = document.getElementsByClassName("budget-list")[0];
 
   Array.from(budgetCardsDiv.children).forEach((catCard) => {
     if (catCard.category === cat) {
@@ -134,7 +133,7 @@ const addBudget = (e) => {
   const card = createCard(budget);
 
   // Update the UI
-  document.getElementsByClassName("categories")[0].appendChild(card);
+  document.getElementsByClassName("budget-list")[0].appendChild(card);
   renderElements();
 
   Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
@@ -147,7 +146,7 @@ const addBudget = (e) => {
  */
 const createCard = (budget) => {
   let card = document.createElement("div");
-  card.classList.add("category");
+  card.classList.add("budget");
   card.category = budget.category;
   card.innerHTML = `
     <label class="spent/amount-display">
@@ -183,22 +182,23 @@ const createCard = (budget) => {
  */
 const renderElements = () => {
   loadOverview();
-  loadChart(
-    {
-      labels: Object.keys(budgetList),
-      data: Object.keys(budgetList).map((cat) => budgetList[cat].budgetSpent),
-      total: budgets.totalSpent,
-      limit: budgets.totalBudget,
-    },
-    Options
-  );
+  if (budgets.totalBudget !== 0)
+    loadChart(
+      {
+        labels: Object.keys(budgetList),
+        data: Object.keys(budgetList).map((cat) => budgetList[cat].budgetSpent),
+        total: budgets.totalSpent,
+        limit: budgets.totalBudget,
+      },
+      Options
+    );
   setCategories();
 };
 
 // Initialize budget cards from stored data
 Object.keys(budgetList).forEach((cat) => {
   document
-    .getElementsByClassName("categories")[0]
+    .getElementsByClassName("budget-list")[0]
     .appendChild(createCard(budgetList[cat]));
 });
 

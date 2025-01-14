@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Overview</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
     <link href="./css/global-styles.css" rel="stylesheet" />
     <link href="./css/overview-styles.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -35,6 +36,16 @@
                   <h3>Pots</h3>
                   <a href="./html/pots.html">View All</a>
                 </header>
+                <div class="pots-overview">
+                  <div class="pots-saved">
+                    <i class="fa-solid fa-piggy-bank fa-3x"></i>
+                    <div class="saved-info">
+                      <span>Total Saved</span>
+                      <span class="pots-saved-field"></span>
+                    </div>
+                  </div>
+                  <div class="pot-list"></div>
+                </div>
               </div>
               <div class="card" id="transactions-card">
                 <header>
@@ -67,6 +78,10 @@
         </section>
       </main>
     </div>
+    <script
+      src="https://kit.fontawesome.com/1db965118e.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="./js/utilities/includeHTML.js"></script>
     <script src="./js/overview.js" type="module"></script>
   </body>

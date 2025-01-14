@@ -4,13 +4,24 @@ import { loadChart } from "./utilities/loadChart.js";
 
 let transactions = Cookies.checkCookie("transactions")
   ? JSON.parse(Cookies.getCookie("transactions"))
-  : [];
+  : {
+      transactionList: [],
+      totalIncome: 0,
+      totalExpense: 0,
+    };
 let budgets = Cookies.checkCookie("budgets")
   ? JSON.parse(Cookies.getCookie("budgets"))
-  : {};
-const transactionList = document.getElementsByClassName("transaction-list")[0];
+  : {
+      budgetList: {},
+      totalSpent: 0,
+      totalBudget: 0,
+    };
+let pots = Cookies.checkCookie("pots")
+  ? JSON.parse(Cookies.getCookie("pots"))
+  : { totalSaved: 0, potList: {} };
+const transactionCards = document.getElementsByClassName("transaction-list")[0];
+const potCards = document.getElementsByClassName("pot-list")[0];
 
-// Financial Overview
 transactions.transactionList.forEach((transaction) => {
   const card = document.createElement("div");
   card.classList.add("transaction");
@@ -20,7 +31,7 @@ transactions.transactionList.forEach((transaction) => {
     transaction.amount
   )}</span><span>${transaction.date}</span></div>`;
 
-  transactionList.appendChild(card);
+  transactionCards.appendChild(card);
 });
 
 document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
@@ -30,15 +41,26 @@ document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
 document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
   Options.currency + Math.abs(transactions.totalExpense);
 
-// Budgets
-loadChart(
-  {
-    labels: Object.keys(budgets.budgetList),
-    data: Object.keys(budgets.budgetList).map(
-      (cat) => budgets.budgetList[cat].budgetSpent
-    ),
-    total: budgets.totalSpent,
-    limit: budgets.totalBudget,
-  },
-  Options
-);
+if (budgets.totalBudget !== 0)
+  loadChart(
+    {
+      labels: Object.keys(budgets.budgetList),
+      data: Object.keys(budgets.budgetList).map(
+        (cat) => budgets.budgetList[cat].budgetSpent
+      ),
+      total: budgets.totalSpent,
+      limit: budgets.totalBudget,
+    },
+    Options
+  );
+
+document.getElementsByClassName("pots-saved-field")[0].innerHTML =
+  Options.currency + pots.totalSaved;
+
+Object.keys(pots.potList).forEach((potName) => {
+  const card = document.createElement("div");
+  card.classList.add("pot");
+  card.innerHTML = `<span>${pots.potList[potName].name}</span><span>${Options.currency}${pots.potList[potName].currentBalance}</span>`;
+
+  potCards.appendChild(card);
+});

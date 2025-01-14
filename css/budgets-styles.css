@@ -48,7 +48,7 @@
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: var(--navbar-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -193,48 +193,48 @@
 .cancel-btn:hover {
   background-color: #d32f2f; }
 
-.categories {
+.budget-list {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
   opacity: 0;
   animation: fadeInUp 1s forwards 0.6s;
   overflow-y: auto; }
-  .categories > h3 {
+  .budget-list > h3 {
     text-align: center; }
-  .categories > .category {
+  .budget-list > .budget {
     margin-bottom: 10px;
     padding: 0.7rem;
     background-color: var(--background-color); }
-    .categories > .category > label {
+    .budget-list > .budget > label {
       display: flex;
       justify-content: space-between;
       font-size: 0.9em;
       margin-bottom: 4px; }
-    .categories > .category > .progress-bar {
+    .budget-list > .budget > .progress-bar {
       position: relative;
       margin-top: 20px;
       height: 10px;
       background: #ddd;
       border-radius: 5px;
       overflow: hidden; }
-      .categories > .category > .progress-bar > span {
+      .budget-list > .budget > .progress-bar > span {
         display: block;
         height: 100%;
         background: #2d6a4f;
         width: 0px;
         animation: growBar 1s forwards; }
-    .categories > .category > .action-buttons {
+    .budget-list > .budget > .action-buttons {
       display: flex;
       justify-content: flex-end;
       margin-top: 15px; }
-      .categories > .category > .action-buttons > * {
+      .budget-list > .budget > .action-buttons > * {
         cursor: pointer;
         border: 0; }
-      .categories > .category > .action-buttons > .del-button {
+      .budget-list > .budget > .action-buttons > .del-button {
         margin-left: 20px;
         background-color: transparent; }
-      .categories > .category > .action-buttons > .limit-button {
+      .budget-list > .budget > .action-buttons > .limit-button {
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.253); }
 
