@@ -28,13 +28,15 @@ const addPot = (e) => {
 
   const card = createCard(pot);
 
-  document.getElementsByClassName("pots-list")[0].appendChild(card);
+  document.getElementsByClassName("pot-list")[0].appendChild(card);
 
   Cookies.setCookie("pots", JSON.stringify(pots), 1);
 };
 
 const deletePot = (potName, potCard) => {
   potCard.parentNode.removeChild(potCard);
+
+  pots.totalSaved -= potList[potName].currentBalance;
 
   delete potList[potName];
 
@@ -52,6 +54,10 @@ const addMoney = (e, potName, potCard) => {
 
   const newBalance = potList[potName].currentBalance + amountToAdd;
 
+  pots.totalSaved += amountToAdd;
+
+  console.log(pots);
+
   potList[potName].currentBalance = newBalance;
 
   potCard.getElementsByClassName(
@@ -62,6 +68,8 @@ const addMoney = (e, potName, potCard) => {
   }%`;
 
   document.getElementById("change-limit-box").classList.remove("active");
+
+  Cookies.setCookie("pots", JSON.stringify(pots), 1);
 };
 
 const takeMoney = (e, potName, potCard) => {
@@ -71,6 +79,8 @@ const takeMoney = (e, potName, potCard) => {
 
   const newBalance = potList[potName].currentBalance - amountToTake;
 
+  pots.totalSaved -= amountToTake;
+
   potList[potName].currentBalance = newBalance;
 
   potCard.getElementsByClassName(
@@ -81,6 +91,8 @@ const takeMoney = (e, potName, potCard) => {
   }%`;
 
   document.getElementById("change-limit-box").classList.remove("active");
+
+  Cookies.setCookie("pots", JSON.stringify(pots), 1);
 };
 
 const editGoal = (e, potName, potCard) => {
@@ -98,6 +110,8 @@ const editGoal = (e, potName, potCard) => {
   }%`;
 
   document.getElementById("change-limit-box").classList.remove("active");
+
+  Cookies.setCookie("pots", JSON.stringify(pots), 1);
 };
 
 const potEditControl = (actionName, potName, potCard) => {
@@ -119,14 +133,13 @@ const potEditControl = (actionName, potName, potCard) => {
 
   limitBox.getElementsByClassName("limit-form")[0].onsubmit = action;
 
-  Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
-
   limitBox.classList.add("active");
 };
 
 const createCard = (pot) => {
   let card = document.createElement("div");
   card.classList.add("pot-card");
+  card.name = pot.name.toLowerCase();
   card.innerHTML = `
     <h2>${pot.name}</h2>
     <div class="pot-info">
@@ -152,33 +165,54 @@ const createCard = (pot) => {
 
   card
     .getElementsByClassName("delete")[0]
-    .addEventListener("click", () => deletePot(pot.name, card));
+    .addEventListener("click", () => deletePot(pot.name.toLowerCase(), card));
 
   card
     .getElementsByClassName("edit")[0]
     .addEventListener("click", (e) =>
-      potEditControl(e.target.innerHTML, pot.name, card)
+      potEditControl(e.target.innerHTML, pot.name.toLowerCase(), card)
     );
 
   card
     .getElementsByClassName("take-money")[0]
     .addEventListener("click", (e) =>
-      potEditControl(e.target.innerHTML, pot.name, card)
+      potEditControl(e.target.innerHTML, pot.name.toLowerCase(), card)
     );
 
   card
     .getElementsByClassName("add-money")[0]
     .addEventListener("click", (e) =>
-      potEditControl(e.target.innerHTML, pot.name, card)
+      potEditControl(e.target.innerHTML, pot.name.toLowerCase(), card)
     );
   return card;
 };
 
-/*** Initial Render ***/
+const handlePotSearch = (e) => {
+  const searchText = e.target.value;
+
+  const searchFilteredCards = Array.from(potCards).filter((card) => {
+    return (
+      card.name.includes(searchText) || !searchText.replace(/\s/g, "").length
+    );
+  });
+
+  document.getElementsByClassName("pot-list")[0].innerHTML = "";
+
+  searchFilteredCards.forEach((card) =>
+    document.getElementsByClassName("pot-list")[0].appendChild(card)
+  );
+};
+
 Object.keys(potList).forEach((potName) => {
   document
-    .getElementsByClassName("pots-list")[0]
+    .getElementsByClassName("pot-list")[0]
     .appendChild(createCard(potList[potName]));
 });
 
+const potCards = Array.from(
+  document.getElementsByClassName("pot-list")[0].children
+);
+
 document.getElementsByClassName("pots-form")[0].onsubmit = addPot;
+
+document.getElementById("search-field").onchange = handlePotSearch;

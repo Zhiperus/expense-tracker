@@ -16,9 +16,12 @@ let budgets = Cookies.checkCookie("budgets")
       totalSpent: 0,
       totalBudget: 0,
     };
-const transactionList = document.getElementsByClassName("transaction-list")[0];
+let pots = Cookies.checkCookie("pots")
+  ? JSON.parse(Cookies.getCookie("pots"))
+  : { totalSaved: 0, potList: {} };
+const transactionCards = document.getElementsByClassName("transaction-list")[0];
+const potCards = document.getElementsByClassName("pot-list")[0];
 
-// Financial Overview
 transactions.transactionList.forEach((transaction) => {
   const card = document.createElement("div");
   card.classList.add("transaction");
@@ -28,7 +31,7 @@ transactions.transactionList.forEach((transaction) => {
     transaction.amount
   )}</span><span>${transaction.date}</span></div>`;
 
-  transactionList.appendChild(card);
+  transactionCards.appendChild(card);
 });
 
 document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
@@ -39,7 +42,6 @@ document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=
   Options.currency + Math.abs(transactions.totalExpense);
 
 if (budgets.totalBudget !== 0)
-  // Budgets
   loadChart(
     {
       labels: Object.keys(budgets.budgetList),
@@ -51,3 +53,14 @@ if (budgets.totalBudget !== 0)
     },
     Options
   );
+
+document.getElementsByClassName("pots-saved-field")[0].innerHTML =
+  Options.currency + pots.totalSaved;
+
+Object.keys(pots.potList).forEach((potName) => {
+  const card = document.createElement("div");
+  card.classList.add("pot");
+  card.innerHTML = `<span>${pots.potList[potName].name}</span><span>${Options.currency}${pots.potList[potName].currentBalance}</span>`;
+
+  potCards.appendChild(card);
+});

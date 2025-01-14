@@ -200,10 +200,11 @@ $font-size-large: 1.4rem;
     background-color: #d32f2f;
   }
 
-  .pots-list {
+  .pot-list {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+    overflow-y: auto;
 
     .pot-card {
       background: #ffffff;

@@ -241,7 +241,7 @@ $font-size-large: 1.4rem;
   background-color: #d32f2f;
 }
 
-.categories {
+.budget-list {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -253,7 +253,7 @@ $font-size-large: 1.4rem;
     text-align: center;
   }
 
-  > .category {
+  > .budget {
     margin-bottom: 10px;
     padding: 0.7rem;
     background-color: var(--background-color);

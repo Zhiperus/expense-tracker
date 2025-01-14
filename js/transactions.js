@@ -18,7 +18,6 @@ const expenseOptions = Options.expenseCategories.map(
 );
 
 /*** Utility Functions ***/
-
 const updateBudgetsOnDelete = (transaction) => {
   if (
     transaction.type === "expense" &&
@@ -138,8 +137,6 @@ const timeFilter = (event) => {
     );
 };
 
-/*** Initial Rendering ***/
-
 const renderInitialCards = () => {
   transactionList.forEach((transaction) => {
     transactionCards.appendChild(createCard(transaction));
@@ -151,7 +148,6 @@ const setInitialOptions = () => {
 };
 
 /*** Event Listeners ***/
-
 const setupFormSubmission = () => {
   document.getElementsByTagName("form")[0].onsubmit = (e) => {
     e.preventDefault();
@@ -224,8 +220,6 @@ const setupRadioButtons = () => {
 const setupTimeFilter = () => {
   document.getElementById("select-time").addEventListener("change", timeFilter);
 };
-
-/*** Main Initialization ***/
 
 const init = () => {
   renderInitialCards();

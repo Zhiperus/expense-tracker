@@ -148,11 +148,12 @@
     transition: background-color 0.3s ease; }
   .pots-section .cancel-btn:hover {
     background-color: #d32f2f; }
-  .pots-section .pots-list {
+  .pots-section .pot-list {
     display: flex;
     flex-direction: column;
-    margin-top: 20px; }
-    .pots-section .pots-list .pot-card {
+    margin-top: 20px;
+    overflow-y: auto; }
+    .pots-section .pot-list .pot-card {
       background: #ffffff;
       margin-top: 10px;
       border-radius: 10px;
@@ -162,53 +163,53 @@
       height: 180px;
       display: flex;
       flex-direction: column; }
-      .pots-section .pots-list .pot-card h2 {
+      .pots-section .pot-list .pot-card h2 {
         font-size: 1.2rem;
         color: #333;
         margin-bottom: 8px; }
-      .pots-section .pots-list .pot-card .pot-info {
+      .pots-section .pot-list .pot-card .pot-info {
         margin-bottom: 10px; }
-        .pots-section .pots-list .pot-card .pot-info p {
+        .pots-section .pot-list .pot-card .pot-info p {
           margin: 3px 0;
           font-size: 0.9rem;
           color: #555; }
-      .pots-section .pots-list .pot-card .progress-container {
+      .pots-section .pot-list .pot-card .progress-container {
         background: #e0e0e0;
         border-radius: 10px;
         height: 8px;
         margin: 10px 0; }
-        .pots-section .pots-list .pot-card .progress-container .progress-bar {
+        .pots-section .pot-list .pot-card .progress-container .progress-bar {
           height: 8px;
           background: #4caf50;
           width: 0%;
           transition: width 0.3s ease-in-out; }
-      .pots-section .pots-list .pot-card .actions {
+      .pots-section .pot-list .pot-card .actions {
         display: flex;
         justify-content: flex-end;
         gap: 5px;
         margin-top: auto; }
-        .pots-section .pots-list .pot-card .actions button {
+        .pots-section .pot-list .pot-card .actions button {
           padding: 5px 10px;
           font-size: 0.75rem;
           color: #fff;
           border: none;
           border-radius: 5px;
           cursor: pointer; }
-          .pots-section .pots-list .pot-card .actions button:nth-child(1) {
+          .pots-section .pot-list .pot-card .actions button:nth-child(1) {
             background: #007bff; }
-            .pots-section .pots-list .pot-card .actions button:nth-child(1):hover {
+            .pots-section .pot-list .pot-card .actions button:nth-child(1):hover {
               background: #0056b3; }
-          .pots-section .pots-list .pot-card .actions button:nth-child(2) {
+          .pots-section .pot-list .pot-card .actions button:nth-child(2) {
             background: #ffc107; }
-            .pots-section .pots-list .pot-card .actions button:nth-child(2):hover {
+            .pots-section .pot-list .pot-card .actions button:nth-child(2):hover {
               background: #e0a800; }
-          .pots-section .pots-list .pot-card .actions button:nth-child(3) {
+          .pots-section .pot-list .pot-card .actions button:nth-child(3) {
             background: purple; }
-            .pots-section .pots-list .pot-card .actions button:nth-child(3):hover {
+            .pots-section .pot-list .pot-card .actions button:nth-child(3):hover {
               background: #950085; }
-          .pots-section .pots-list .pot-card .actions button.delete {
+          .pots-section .pot-list .pot-card .actions button.delete {
             background: #dc3545; }
-            .pots-section .pots-list .pot-card .actions button.delete:hover {
+            .pots-section .pot-list .pot-card .actions button.delete:hover {
               background: #b21f2d; }
 
 @keyframes fadeIn {
