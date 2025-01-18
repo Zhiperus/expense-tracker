@@ -1,6 +1,7 @@
 import uuidv4 from "./utilities/UUID.js";
 import Cookies from "./utilities/cookies.js";
 import Options from "./lib/options.js";
+import { updateDatabase } from "./utilities/updateDB.js";
 
 /*** Variables Initialization ***/
 let transactions = { totalIncome: 0, totalExpense: 0, transactionList: [] };
@@ -30,6 +31,7 @@ const updateBudgetsOnDelete = (transaction) => {
     );
     budgets.totalSpent -= Math.abs(transaction.amount);
     Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+    updateDatabase("budgets");
   }
 };
 
@@ -45,6 +47,7 @@ const updateBudgetsOnAdd = (transaction) => {
     );
     budgets.totalSpent += Math.abs(transaction.amount);
     Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+    updateDatabase("budgets");
   }
 };
 
@@ -69,6 +72,8 @@ const delTransaction = (Id) => {
   } else {
     Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
   }
+
+  updateDatabase("transactions");
 
   transactionCards.removeChild(transactionCards.children[nodeIndex]);
 };
@@ -200,6 +205,7 @@ const setupFormSubmission = () => {
 
     updateBudgetsOnAdd(transaction);
     Cookies.setCookie("transactions", JSON.stringify(transactions), 1);
+    updateDatabase("transactions");
 
     let next = transactionCards.children[i];
     next.parentNode.insertBefore(card, next);

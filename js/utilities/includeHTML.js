@@ -1,3 +1,9 @@
+import Cookies from "./cookies.js";
+
+const user = Cookies.checkCookie("user")
+  ? JSON.parse(Cookies.getCookie("user"))
+  : null;
+
 const includeHTML = (callback) => {
   var z, i, elmnt, file, xhttp;
   z = document.getElementsByTagName("*");
@@ -30,19 +36,40 @@ const includeHTML = (callback) => {
 const handleMinimize = () => {
   const navbar = document.getElementsByTagName("nav")[0];
   navbar.classList.toggle("nav--minimize");
-  navbar.getElementsByTagName("img")[0].classList.toggle("open-logo--show");
-  console.log(navbar.getElementsByTagName("span")[0]);
   navbar
-    .getElementsByTagName("span")[0]
+    .getElementsByClassName("maximize-logo")[0]
+    .classList.toggle("maximize-logo--show");
+  navbar
+    .getElementsByClassName("minimize-text")[0]
     .classList.toggle("minimize-button--hide");
+  navbar.getElementsByClassName("user-profile")[0].inert =
+    !navbar.getElementsByClassName("user-profile")[0].inert;
+  navbar.getElementsByClassName("page-tabs")[0].inert =
+    !navbar.getElementsByClassName("page-tabs")[0].inert;
 };
 
 includeHTML(() => {
   const page = document.getElementsByTagName("Title")[0].innerHTML;
 
-  document
-    .getElementById(`${page.toLowerCase()}-anc`)
-    .classList.add("selected");
+  if (user) {
+    document.getElementsByClassName("user-name")[0].innerHTML = user.name;
+    document.getElementsByClassName("user-name")[0].style.visibility =
+      "visible";
+    document.getElementById("login-anc").removeAttribute("href");
+    document.getElementById("login-anc").innerHTML = "Logout";
+    document.getElementById("login-anc").style.backgroundColor = "red";
+    document.getElementById("login-anc").onclick = () => {
+      Cookies.deleteCookie("budgets");
+      Cookies.deleteCookie("transactions");
+      Cookies.deleteCookie("pots");
+      Cookies.deleteCookie("user");
+    };
+  }
+
+  if (page !== "Signup")
+    document
+      .getElementById(`${page.toLowerCase()}-anc`)
+      .classList.add("selected");
 
   document
     .getElementById("minimize-button")

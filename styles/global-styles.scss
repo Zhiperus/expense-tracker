@@ -48,7 +48,6 @@ nav {
   display: flex;
   flex-direction: column;
   width: $nav-width;
-  padding-left: $nav-padding;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   color: whitesmoke;
@@ -63,6 +62,7 @@ nav {
     color: #4caf50; /* A pleasant green tone to match the buttons */
     letter-spacing: 2px;
     margin: 20px 0;
+    text-align: center;
   }
 
   > * {
@@ -89,6 +89,7 @@ nav {
   flex-direction: column;
   margin-top: 40px;
   gap: 50px;
+  padding-left: $nav-padding;
 
   a {
     display: block;
@@ -114,21 +115,83 @@ nav {
 }
 
 #minimize-button {
+  padding-left: 0.5em;
   margin-top: auto;
   margin-bottom: 50px;
-  cursor: pointer;
   opacity: 1;
+  cursor: pointer;
 
   .minimize-button--hide {
     visibility: hidden;
   }
 }
 
-.open-logo {
+.maximize-logo {
   visibility: hidden;
 
   &--show {
     visibility: visible;
+  }
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px auto;
+  padding: 20px 0px;
+  width: 90%; /* Ensures consistent width */
+  max-width: 250px;
+  background-color: #1f1f1f; /* Slightly lighter than the nav background */
+  border-radius: 15px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Elevates the profile section */
+  text-align: center;
+  transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px); /* Subtle hover effect */
+    box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.profile-picture {
+  width: 70px; /* Increased size for better emphasis */
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid #4caf50; /* Matches the app theme */
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Adds depth */
+}
+
+.user-name {
+  font-family: "Arial", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: whitesmoke;
+  margin-top: 5px;
+  visibility: hidden;
+}
+
+#login-anc {
+  padding: 10px 25px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: whitesmoke;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out, transform 150ms ease-in-out;
+
+  &:hover {
+    background-color: #45a049;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
+
+  &:active {
+    transform: scale(1); /* Returns to normal size on click */
   }
 }
 
