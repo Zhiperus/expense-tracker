@@ -2,6 +2,7 @@
 import Cookies from "./utilities/cookies.js";
 import Options from "./lib/options.js";
 import { loadChart } from "./utilities/loadChart.js";
+import { updateDatabase } from "./utilities/updateDB.js";
 
 // Initialize budgets and transactions
 let budgets = { totalBudget: 0, totalSpent: 0, budgetList: {} };
@@ -78,7 +79,7 @@ const changeBudgetLimit = (cat) => {
     renderElements();
 
     Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
-
+    updateDatabase("budgets");
     limitBox.classList.remove("active");
   };
 
@@ -107,6 +108,8 @@ const delBudget = (cat) => {
   } else {
     Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
   }
+
+  updateDatabase("budgets");
 
   renderElements();
 };
@@ -137,6 +140,7 @@ const addBudget = (e) => {
   renderElements();
 
   Cookies.setCookie("budgets", JSON.stringify(budgets), 1);
+  updateDatabase("budgets");
 };
 
 /**

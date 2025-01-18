@@ -1,5 +1,6 @@
 import Options from "./lib/options.js";
 import Cookies from "./utilities/cookies.js";
+import { updateDatabase } from "./utilities/updateDB.js";
 
 let pots = { totalSaved: 0, potList: {} };
 pots = pots = Cookies.checkCookie("pots")
@@ -31,6 +32,7 @@ const addPot = (e) => {
   document.getElementsByClassName("pot-list")[0].appendChild(card);
 
   Cookies.setCookie("pots", JSON.stringify(pots), 1);
+  updateDatabase("pots");
 };
 
 const deletePot = (potName, potCard) => {
@@ -45,6 +47,8 @@ const deletePot = (potName, potCard) => {
   } else {
     Cookies.setCookie("pots", JSON.stringify(pots), 1);
   }
+
+  updateDatabase("pots");
 };
 
 const addMoney = (e, potName, potCard) => {
@@ -70,6 +74,7 @@ const addMoney = (e, potName, potCard) => {
   document.getElementById("change-limit-box").classList.remove("active");
 
   Cookies.setCookie("pots", JSON.stringify(pots), 1);
+  updateDatabase("pots");
 };
 
 const takeMoney = (e, potName, potCard) => {
@@ -93,6 +98,7 @@ const takeMoney = (e, potName, potCard) => {
   document.getElementById("change-limit-box").classList.remove("active");
 
   Cookies.setCookie("pots", JSON.stringify(pots), 1);
+  updateDatabase("pots");
 };
 
 const editGoal = (e, potName, potCard) => {
@@ -112,6 +118,7 @@ const editGoal = (e, potName, potCard) => {
   document.getElementById("change-limit-box").classList.remove("active");
 
   Cookies.setCookie("pots", JSON.stringify(pots), 1);
+  updateDatabase("pots");
 };
 
 const potEditControl = (actionName, potName, potCard) => {

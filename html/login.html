@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
+    <link href="../css/global-styles.css" rel="stylesheet" />
+    <link href="../css/login-styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="flex-container">
+      <nav include-html="nav.html"></nav>
+      <div class="main-content">
+        <div class="login-container">
+          <h1>Login</h1>
+          <span class="error"></span>
+          <form>
+            <input type="email" name="email" placeholder="Email" required />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+            <button id="signup-button" type="submit">Login</button>
+          </form>
+          <p>Don't have an account? <a href="./signup.html">Sign up</a></p>
+        </div>
+      </div>
+    </div>
+    <script src="../js/utilities/includeHTML.js" type="module"></script>
+    <script src="../js/login.js" type="module"></script>
+  </body>
+</html>
