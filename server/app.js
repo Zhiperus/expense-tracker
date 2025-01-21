@@ -12,17 +12,24 @@ app.use(express.json());
 app.use(cors());
 
 // Python
-app.get("/analyze", (req, res) => {
+app.post("/analyze", (req, res) => {
+  const { totalBudget, cumulative } = req.body;
+
   const ls = spawn("python", [
     "-u",
     "server/algorithm/model.py",
-    "arg1",
-    "arg2",
+    totalBudget,
+    cumulative,
   ]);
 
+  let isProcessed = false; // Flag to ensure only the first output is processed
+
   ls.stdout.on("data", (data) => {
-    console.log(JSON.parse(data.toString("utf-8")));
-    // res.json({ image: "data:image/jpeg;base64," + data.toString("base64") });
+    if (!isProcessed) {
+      const result = JSON.parse(data.toString("utf-8"));
+      res.json(result);
+      isProcessed = true;
+    }
   });
 
   ls.stderr.on("data", (data) => {

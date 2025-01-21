@@ -1,7 +1,6 @@
 import sys
 import io
-import os
-import shutil
+import base64
 import json
 import numpy as np
 import pandas as pd
@@ -11,14 +10,15 @@ from sklearn.model_selection import train_test_split
 from PIL import Image 
 sys.dont_write_bytecode = True
 
+budget_limit = int(sys.argv[1])
+cumulative_spending = [int(numeric_string) for numeric_string in sys.argv[2].split(",")]
+
 data = {
-    "Day": np.arange(1, 6),  
-    "Cumulative_Spending": [900, 1200, 1500, 1900, 2300]
+    "Day": np.arange(1, len(cumulative_spending) + 1),  
+    "Cumulative_Spending": cumulative_spending
 }
 
 df = pd.DataFrame(data)
-
-budget_limit = 3000
 
 X = df["Day"].values.reshape(-1, 1)
 y = df["Cumulative_Spending"].values
@@ -47,23 +47,15 @@ plt.tight_layout()
 
 fig = plt.gcf() 
 
-def fig2img(fig): 
-    buf = io.BytesIO() 
-    fig.savefig(buf) 
-    buf.seek(0) 
-    img = Image.open(buf) 
-    return img 
-
-buf = io.BytesIO() 
-img = fig2img(fig) 
-img = img.convert('RGB')
-img.save(buf, format="JPEG")
-buffer = buf.getvalue()
+buf = io.BytesIO()
+plt.savefig(buf, format="jpeg")
+buf.seek(0)
+base64_image = base64.b64encode(buf.getvalue()).decode('utf-8')
 
 thisdict = {
-  "daysLeft": "days_to_exhaustion",
-  "figure": buffer,
+  "daysLeft": int(days_to_exhaustion),
+  "figure": "data:image/jpeg;base64," + base64_image,
 }
 
-print(json.dumps(thisdict))  # Print as JSON string
+print(json.dumps(thisdict))  
 sys.stdout.flush()

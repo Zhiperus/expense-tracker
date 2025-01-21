@@ -194,9 +194,9 @@ const setupFormSubmission = () => {
           i === transactionList.length - 1
         ) {
           transactions.transactionList = [
-            ...transactionList.slice(0, i),
+            ...transactions.transactionList.slice(0, i),
             transaction,
-            ...transactionList.slice(i),
+            ...transactions.transactionList.slice(i),
           ];
           break;
         }
