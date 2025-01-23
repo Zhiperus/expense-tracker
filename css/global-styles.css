@@ -34,7 +34,8 @@ nav {
   color: whitesmoke;
   background-color: #232226;
   transition: width 280ms ease-in-out;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
   nav .app-title {
     font-family: "Arial", sans-serif;
     font-size: 36px;
@@ -67,7 +68,8 @@ nav {
     color: gainsboro;
     text-decoration: none;
     font-size: 1.1rem;
-    border-radius: 8px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     transition: background-color 200ms ease-in-out, color 200ms ease-in-out; }
     .page-tabs a:hover {
       background-color: #444;
@@ -79,10 +81,12 @@ nav {
       border-left: 4px solid #ff9800; }
 
 #minimize-button {
-  padding-left: 0.5em;
+  padding-left: 2em;
   margin-top: auto;
   margin-bottom: 50px;
   opacity: 1;
+  color: gray;
+  font-size: large;
   cursor: pointer; }
   #minimize-button .minimize-button--hide {
     visibility: hidden; }
@@ -90,7 +94,8 @@ nav {
 .maximize-logo {
   visibility: hidden; }
   .maximize-logo--show {
-    visibility: visible; }
+    visibility: visible;
+    margin-left: -2rem; }
 
 .user-profile {
   display: flex;
@@ -142,6 +147,7 @@ nav {
   background-color: #4caf50;
   border: none;
   border-radius: 8px;
+  text-decoration: none;
   cursor: pointer;
   transition: background-color 200ms ease-in-out, transform 150ms ease-in-out; }
   #login-anc:hover {

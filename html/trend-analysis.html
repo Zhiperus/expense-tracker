@@ -6,13 +6,54 @@
     <title>Trend</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.svg" />
     <link href="../css/global-styles.css" rel="stylesheet" />
-    <style></style>
+    <style>
+      .trend-container {
+        text-align: center;
+        margin: 20px auto;
+      }
+      .trend-container img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      .trend-container .days-left {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 10px;
+        color: #2c3e50;
+      }
+      .trend-container .budget-warning {
+        font-size: 1.2rem;
+        margin-top: 5px;
+        color: #e74c3c;
+        font-style: italic;
+      }
+    </style>
   </head>
   <body>
     <div class="flex-container">
       <nav include-html="nav.html"></nav>
-      <div class="main-content"><div include-html="maint.html"></div></div>
+      <div class="main-content">
+        <div class="trend-container">
+          <div class="days-left">Loading...</div>
+          <div class="budget-warning">
+            Your budget will run out in X days...
+          </div>
+          <img
+            class="trend-figure"
+            src=""
+            alt="Trend Analysis Figure"
+            loading="lazy"
+          />
+        </div>
+        <h2 style="text-align: center; margin-top: 14rem">
+          Not enough data to predict trend...
+        </h2>
+      </div>
     </div>
     <script src="../js/utilities/includeHTML.js" type="module"></script>
+    <script src="../js/trend-analysis.js" type="module"></script>
   </body>
 </html>

@@ -82,7 +82,9 @@ form {
   padding-top: 15px;
   background-color: white;
   border: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards; }
   .transaction-history > .header {
     display: flex;
     justify-content: flex-end;
@@ -149,3 +151,11 @@ form {
   .transaction-cards {
     flex-direction: column;
     align-items: center; } }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } }

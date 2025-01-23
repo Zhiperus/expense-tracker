@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import collection from "./mongoose.js";
 import mongoose from "mongoose";
+import { spawn } from "child_process";
+import collection from "./mongoose.js";
 dotenv.config();
 
 const app = express();
@@ -11,7 +12,34 @@ app.use(express.json());
 app.use(cors());
 
 // Python
-app.get("/analyze", (req, res) => {});
+app.post("/analyze", (req, res) => {
+  const { totalBudget, cumulative } = req.body;
+
+  const ls = spawn("python", [
+    "-u",
+    "server/algorithm/model.py",
+    totalBudget,
+    cumulative,
+  ]);
+
+  let isProcessed = false; // Flag to ensure only the first output is processed
+
+  ls.stdout.on("data", (data) => {
+    if (!isProcessed) {
+      const result = JSON.parse(data.toString("utf-8"));
+      res.json(result);
+      isProcessed = true;
+    }
+  });
+
+  ls.stderr.on("data", (data) => {
+    console.log(`stderr: ${data}`);
+  });
+
+  ls.on("close", (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+});
 
 app.post("/login", async (req, res) => {
   try {
