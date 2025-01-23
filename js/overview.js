@@ -34,8 +34,14 @@ transactions.transactionList.forEach((transaction) => {
   transactionCards.appendChild(card);
 });
 
-document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
-  Options.currency + (transactions.totalIncome + transactions.totalExpense);
+if (transactions.totalIncome + transactions.totalExpense < 0)
+  document.getElementsByClassName("amount-field")[0].children[0].innerHTML =
+    "-" +
+    Options.currency +
+    Math.abs(transactions.totalIncome + transactions.totalExpense);
+else
+  document.getElementsByClassName("amount-field")[0].children[0].innerHTML +=
+    Options.currency + (transactions.totalIncome + transactions.totalExpense);
 document.getElementsByClassName("amount-field")[1].children[0].innerHTML +=
   Options.currency + transactions.totalIncome;
 document.getElementsByClassName("amount-field")[2].children[0].innerHTML +=

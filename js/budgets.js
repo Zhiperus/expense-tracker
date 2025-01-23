@@ -74,6 +74,12 @@ const changeBudgetLimit = (cat) => {
         )[0].style.width = `${
           (expenseInCat / budgetList[cat].budgetAmount) * 100
         }`;
+        catCard.getElementsByClassName(
+          "progress-bar field"
+        )[0].style.background =
+          budgetList[cat].budgetSpent > budgetList[cat].budgetAmount
+            ? "maroon"
+            : "#2d6a4f";
       }
     });
     renderElements();
@@ -162,7 +168,9 @@ const createCard = (budget) => {
     <div class="progress-bar"> 
       <span class="progress-bar field" style="width: ${
         (budget.budgetSpent / budget.budgetAmount) * 100
-      }%"></span>
+      }%; background: ${
+    budget.budgetSpent > budget.budgetAmount ? "maroon" : "#2d6a4f"
+  };"></span>
     </div>  
     <div class="action-buttons">
       <button class="limit-button">Change Limit</button>
