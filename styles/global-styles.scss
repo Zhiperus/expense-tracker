@@ -54,6 +54,7 @@ nav {
   background-color: $navbar-color;
   transition: width $transition-duration ease-in-out;
   box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
   .app-title {
     font-family: "Arial", sans-serif;
@@ -97,7 +98,8 @@ nav {
     color: $text-color;
     text-decoration: none;
     font-size: 1.1rem;
-    border-radius: 8px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
 
     &:hover {
@@ -115,10 +117,12 @@ nav {
 }
 
 #minimize-button {
-  padding-left: 0.5em;
+  padding-left: 2em;
   margin-top: auto;
   margin-bottom: 50px;
   opacity: 1;
+  color: gray;
+  font-size: large;
   cursor: pointer;
 
   .minimize-button--hide {
@@ -131,6 +135,7 @@ nav {
 
   &--show {
     visibility: visible;
+    margin-left: -2rem;
   }
 }
 
@@ -182,6 +187,7 @@ nav {
   background-color: #4caf50;
   border: none;
   border-radius: 8px;
+  text-decoration: none;
   cursor: pointer;
   transition: background-color 200ms ease-in-out, transform 150ms ease-in-out;
 

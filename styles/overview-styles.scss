@@ -3,12 +3,29 @@ $border-radius: 10px;
 $text-color: #333;
 $shadow-light: rgba(0, 0, 0, 0.1);
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 // General Layout Styles
 .overview {
   display: flex;
   flex-direction: column;
   height: 100%;
   gap: 30px;
+  padding-right: 20px;
   overflow-y: auto;
 
   h2 {

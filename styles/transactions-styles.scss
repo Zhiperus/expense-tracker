@@ -115,6 +115,8 @@ form {
   background-color: $background-light;
   border: 1px solid $border-color;
   box-shadow: 0 4px 8px $shadow-light;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards;
 
   > .header {
     display: flex;
@@ -211,5 +213,16 @@ form {
   .transaction-cards {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -14,7 +14,6 @@ let cumulative = [];
 
 if (budgets && transactions && transactions.transactionList.length > 5) {
   const reversedList = transactions.transactionList.reverse();
-  console.log(reversedList);
 
   let currentDate = new Date(reversedList[0].dateObj).getDate();
   let currentTotal = 0;
@@ -40,18 +39,22 @@ if (budgets && transactions && transactions.transactionList.length > 5) {
         );
     }
   });
-}
 
-fetch("http://127.0.0.1:3000/analyze", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ totalBudget: budgets.totalBudget, cumulative }),
-}).then((response) => {
-  response.json().then((data) => {
-    image.src = data.figure;
-    daysLeftText.textContent = `Days left before budget is reached: ${
-      30 - data.daysLeft
-    }`;
-    budgetWarning.textContent = `Your budget will run out in day ${data.daysLeft}. Plan accordingly.`;
+  fetch("http://127.0.0.1:3000/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ totalBudget: budgets.totalBudget, cumulative }),
+  }).then((response) => {
+    response.json().then((data) => {
+      image.src = data.figure;
+      daysLeftText.textContent = `Days left before budget is reached: ${
+        30 - data.daysLeft
+      }`;
+      budgetWarning.textContent = `Your budget will run out in day ${data.daysLeft}. Plan accordingly.`;
+    });
   });
-});
+
+  document.querySelector(".trend-container").style.visibility = "visible";
+} else {
+  document.querySelector(".trend-container").style.visibility = "hidden";
+}
