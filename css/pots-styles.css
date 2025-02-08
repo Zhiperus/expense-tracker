@@ -1,6 +1,6 @@
 .main-content {
   display: flex;
-  gap: 130px; }
+  gap: 2rem; }
 
 .pots-form {
   display: grid;

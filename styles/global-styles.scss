@@ -47,86 +47,111 @@ article {
 nav {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: $nav-width;
+  min-height: 100vh;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   color: whitesmoke;
   background-color: $navbar-color;
   transition: width $transition-duration ease-in-out;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
 
-  .app-title {
-    font-family: "Arial", sans-serif;
-    font-size: 36px;
-    font-weight: bold;
-    color: #4caf50; /* A pleasant green tone to match the buttons */
-    letter-spacing: 2px;
-    margin: 20px 0;
+  .user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 10px;
+    width: 90%;
+    max-width: 250px;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
+    transition: width 200ms ease-in-out, transform 200ms ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
+    }
   }
 
-  > * {
-    opacity: 1;
-    transition: opacity $transition-duration ease-in-out,
-      visibility 0s linear $transition-duration;
+  .profile-picture {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 3px solid #4caf50;
+    object-fit: cover;
+    transition: width 200ms ease-in-out, height 200ms ease-in-out;
+  }
+
+  .user-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: whitesmoke;
+    transition: opacity 200ms ease-in-out, font-size 200ms ease-in-out;
+  }
+
+  .page-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    flex-grow: 2;
+    padding-left: $nav-padding;
+    transition: width 200ms ease-in-out, opacity 200ms ease-in-out;
+
+    a {
+      padding: 10px 20px;
+      color: $text-color;
+      text-decoration: none;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+
+      &:hover {
+        background-color: $link-hover-bg;
+        color: $link-hover-color;
+      }
+
+      &.selected {
+        background-color: $link-selected-bg;
+        font-weight: bold;
+        border-left: 4px solid $link-selected-border;
+      }
+    }
+  }
+
+  #minimize-button {
+    margin-top: auto;
+    padding-bottom: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    color: gray;
+    transition: opacity 200ms ease-in-out;
   }
 
   &.nav--minimize {
     width: $nav-minimized-width;
-    padding: 10px;
+    align-items: center;
 
-    > * {
+    > .user-profile,
+    > .page-tabs {
       width: 10px;
       opacity: 0;
       transition: opacity $transition-duration ease-in-out,
         visibility 0s linear 0ms;
     }
-  }
-}
 
-.page-tabs {
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  gap: 50px;
-  padding-left: $nav-padding;
-
-  a {
-    display: block;
-    padding: 10px 20px;
-    color: $text-color;
-    text-decoration: none;
-    font-size: 1.1rem;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
-
-    &:hover {
-      background-color: $link-hover-bg;
-      color: $link-hover-color;
+    .minimize-text {
+      font-size: 0;
+      opacity: 0;
     }
-
-    &.selected {
-      background-color: $link-selected-bg;
-      color: $link-hover-color;
-      font-weight: bold;
-      border-left: 4px solid $link-selected-border;
-    }
-  }
-}
-
-#minimize-button {
-  padding-left: 2em;
-  margin-top: auto;
-  margin-bottom: 50px;
-  opacity: 1;
-  color: gray;
-  font-size: large;
-  cursor: pointer;
-
-  .minimize-button--hide {
-    visibility: hidden;
   }
 }
 
@@ -135,7 +160,6 @@ nav {
 
   &--show {
     visibility: visible;
-    margin-left: -2rem;
   }
 }
 
@@ -159,24 +183,6 @@ nav {
     transform: translateY(-5px); /* Subtle hover effect */
     box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.3);
   }
-}
-
-.profile-picture {
-  width: 70px; /* Increased size for better emphasis */
-  height: 70px;
-  border-radius: 50%;
-  border: 3px solid #4caf50; /* Matches the app theme */
-  object-fit: cover;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Adds depth */
-}
-
-.user-name {
-  font-family: "Arial", sans-serif;
-  font-size: 1rem;
-  font-weight: bold;
-  color: whitesmoke;
-  margin-top: 5px;
-  visibility: hidden;
 }
 
 #login-anc {

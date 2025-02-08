@@ -14,13 +14,13 @@ $font-size-large: 1.4rem;
 
 .main-content {
   display: flex;
-  gap: 130px;
+  gap: 2rem;
+  overflow: hidden;
 }
 
 .left-section {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .budget-form {
@@ -87,6 +87,7 @@ $font-size-large: 1.4rem;
 }
 
 .charts {
+  height: 56.4%;
   margin-top: 20px;
   text-align: center;
   padding: 20px;
@@ -96,12 +97,6 @@ $font-size-large: 1.4rem;
   border: 1px solid $border-color;
   border-radius: 8px;
   box-shadow: 0 4px 8px $shadow-light;
-}
-
-.charts img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
 }
 
 .pie-chart-container {

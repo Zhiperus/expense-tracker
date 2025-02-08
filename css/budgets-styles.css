@@ -1,11 +1,11 @@
 .main-content {
   display: flex;
-  gap: 130px; }
+  gap: 2rem;
+  overflow: hidden; }
 
 .left-section {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between; }
+  flex-direction: column; }
 
 .budget-form {
   display: grid;
@@ -59,6 +59,7 @@
       background-color: #45a049; }
 
 .charts {
+  height: 56.4%;
   margin-top: 20px;
   text-align: center;
   padding: 20px;
@@ -68,11 +69,6 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-
-.charts img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px; }
 
 .pie-chart-container {
   display: flex;

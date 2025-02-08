@@ -1,80 +1,90 @@
 import Cookies from "./cookies.js";
 
-const user = Cookies.checkCookie("user")
-  ? JSON.parse(Cookies.getCookie("user"))
-  : null;
+// Fetch user data from cookies
+const getUserFromCookies = () => {
+  const userCookie = Cookies.checkCookie("user")
+    ? Cookies.getCookie("user")
+    : null;
+  return userCookie ? JSON.parse(userCookie) : null;
+};
 
+const user = getUserFromCookies();
+
+// Function to include external HTML content
 const includeHTML = (callback) => {
-  var z, i, elmnt, file, xhttp;
-  z = document.getElementsByTagName("*");
-  for (i = 0; i < z.length; i++) {
-    elmnt = z[i];
-    file = elmnt.getAttribute("include-html");
+  const elements = document.getElementsByTagName("*");
+
+  for (let element of elements) {
+    const file = element.getAttribute("include-html");
     if (file) {
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4) {
-          if (this.status == 200) {
-            elmnt.innerHTML = this.responseText;
-          }
-          if (this.status == 404) {
-            elmnt.innerHTML = "Page not found.";
-          }
-          elmnt.removeAttribute("include-html");
+      fetch(`http://localhost:5500/html/components/${file}`)
+        .then((response) => {
+          if (response.ok) return response.text();
+          throw new Error("Page not found.");
+        })
+        .then((html) => {
+          element.innerHTML = html;
+          element.removeAttribute("include-html");
+          includeHTML(callback); // Recursively process remaining elements
+        })
+        .catch((error) => {
+          element.innerHTML = error.message;
+          element.removeAttribute("include-html");
           includeHTML(callback);
-        }
-      };
-      xhttp.open("GET", "http://localhost:5500/html/components/" + file, true);
-      xhttp.send();
-      return;
+        });
+      return; // Exit after processing the first include-html element
     }
   }
 
   if (typeof callback === "function") callback();
 };
 
+// Function to handle navbar minimization
 const handleMinimize = () => {
-  const navbar = document.getElementsByTagName("nav")[0];
+  const navbar = document.querySelector("nav");
   navbar.classList.toggle("nav--minimize");
-  navbar
-    .getElementsByClassName("maximize-logo")[0]
-    .classList.toggle("maximize-logo--show");
-  navbar
-    .getElementsByClassName("minimize-text")[0]
-    .classList.toggle("minimize-button--hide");
-  navbar.getElementsByClassName("user-profile")[0].inert =
-    !navbar.getElementsByClassName("user-profile")[0].inert;
-  navbar.getElementsByClassName("page-tabs")[0].inert =
-    !navbar.getElementsByClassName("page-tabs")[0].inert;
+
+  const maximizeLogo = navbar.querySelector(".maximize-logo");
+  const minimizeText = navbar.querySelector(".minimize-text");
+  const userProfile = navbar.querySelector(".user-profile");
+  const pageTabs = navbar.querySelector(".page-tabs");
+
+  maximizeLogo.classList.toggle("maximize-logo--show");
+  minimizeText.classList.toggle("minimize-button--hide");
+  userProfile.inert = !userProfile.inert;
+  pageTabs.inert = !pageTabs.inert;
 };
 
-includeHTML(() => {
-  const page = document.getElementsByTagName("Title")[0].innerHTML;
-
+// Function to update the UI based on user login state
+const updateUIForUser = () => {
   if (user) {
-    document.getElementsByClassName("user-name")[0].innerHTML = user.name;
-    document.getElementsByClassName("user-name")[0].style.visibility =
-      "visible";
-    document.getElementById("login-anc").removeAttribute("href");
-    document.getElementById("login-anc").innerHTML = "Logout";
-    document.getElementById("login-anc").style.backgroundColor = "red";
-    document.getElementById("login-anc").onclick = () => {
-      Cookies.deleteCookie("budgets");
-      Cookies.deleteCookie("transactions");
-      Cookies.deleteCookie("pots");
-      Cookies.deleteCookie("user");
+    const userNameElement = document.querySelector(".user-name");
+    const loginButton = document.getElementById("login-anc");
+
+    userNameElement.innerHTML = user.name;
+    userNameElement.style.visibility = "visible";
+
+    loginButton.removeAttribute("href");
+    loginButton.innerHTML = "Logout";
+    loginButton.style.backgroundColor = "red";
+    loginButton.onclick = () => {
+      ["budgets", "transactions", "pots", "user"].forEach((cookie) =>
+        Cookies.deleteCookie(cookie)
+      );
     };
   }
+};
 
-  if (page !== "Signup")
-    document
-      .getElementById(`${page.toLowerCase()}-anc`)
-      .classList.add("selected");
+// Function to highlight the current page in the navbar
+const highlightCurrentPage = () => {
+  const currentPage = document.querySelector("title").innerHTML.toLowerCase();
+  if (currentPage !== "signup") {
+    document.getElementById(`${currentPage}-anc`).classList.add("selected");
+  }
+};
 
-  document
-    .getElementById("minimize-button")
-    .addEventListener("click", handleMinimize);
-
+// Function to handle link clicks with a fade-out effect
+const setupLinkTransitions = () => {
   const links = document.querySelectorAll("a");
 
   links.forEach((link) => {
@@ -82,12 +92,27 @@ includeHTML(() => {
 
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      document
-        .getElementsByClassName("main-content")[0]
-        .classList.add("fade-out");
+      document.querySelector(".main-content").classList.add("fade-out");
       setTimeout(() => {
         window.location.href = link.href;
       }, 100); // Match the 200ms transition duration
     });
   });
-});
+};
+
+// Main initialization function
+const initializeApp = () => {
+  includeHTML(() => {
+    updateUIForUser();
+    highlightCurrentPage();
+
+    document
+      .getElementById("minimize-button")
+      .addEventListener("click", handleMinimize);
+
+    setupLinkTransitions();
+  });
+};
+
+// Start the app
+initializeApp();
